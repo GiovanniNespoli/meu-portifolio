@@ -39,6 +39,10 @@
 .curtain span { font: 400 clamp(48px, 8vw, 96px)/1 var(--f-script); color: var(--paper); }
 /* Cópia da cortina fechada, ativa desde o <head> (theme.js) para a página nova não piscar antes do site.js rodar */
 html.pf-curtain::after { content: 'Nespoli'; position: fixed; inset: 0; z-index: 150; background: var(--ink); pointer-events: none; display: flex; align-items: center; justify-content: center; font: 400 clamp(48px, 8vw, 96px)/1 var(--f-script); color: var(--paper); }
+/* Texto digitado (text-type.js): cursor fixo enquanto digita, piscando quando para */
+.text-type__cursor { display: inline-block; animation: tt-blink .5s ease-in-out infinite alternate; }
+.is-typing .text-type__cursor { animation: none; }
+@keyframes tt-blink { to { opacity: 0; } }
 @media (max-width: 859px) { .nav__desk { display: none; } .nav__menu-btn { display: block; } }
 @media (min-width: 860px) { .menu { display: none; } }
 
