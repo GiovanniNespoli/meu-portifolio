@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giovanni Nespoli — Engenheiro de software</title>
+<meta name="description" content="Giovanni Nespoli, engenheiro de software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<script src="assets/js/theme.js?v=2"></script>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css?v=3">
+<link rel="stylesheet" href="assets/css/home.css?v=6">
+</head>
+<body data-page="inicio">
+<main id="conteudo">
+
+  <!-- Hero: cena animada pelo scroll (≥1100px) -->
+  <section class="hero-scene" data-screen-label="Início — Hero (cena)">
+    <div class="scene__sticky">
+      <div class="scene__plane" id="s-plane" aria-hidden="true"></div>
+      <div class="scene__wrap"><div class="scene__inner" id="s-inner">
+        <div class="hero-bar"><span>Nº 01 — Início</span><span>Portfólio 2026</span></div>
+        <h1 class="hero-title scene__title" id="s-title">
+          <span class="sr-only">Giovanni Nespoli</span>
+          <svg id="s-title-svg" aria-hidden="true" viewBox="0 0 1000 290"><text class="t-giovanni" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text></svg>
+        </h1>
+        <div class="scene__photo" id="s-photo">
+          <div class="scene__photo-back" aria-hidden="true"></div>
+          <div class="scene__photo-in" id="s-photo-in"><div class="scene__photo-img" id="s-photo-img">
+            <div class="img-slot" data-src="assets/img/retrato.webp?v=3" data-label="Retrato de Giovanni — rosto livre no terço superior"></div>
+          </div></div>
+        </div>
+        <div class="scene__sig" id="s-sig" aria-hidden="true">
+          <svg id="s-sig-svg" viewBox="0 0 700 250"><text class="t-nespoli" x="350" y="185" text-anchor="middle">Nespoli</text></svg>
+        </div>
+        <div class="scene__lead">
+          <p class="lead-kicker" data-reveal="up" data-delay="1000">Engenheiro de software</p>
+          <p class="lead-title">
+            <span class="line-mask"><span data-reveal="line" data-delay="1080">Transformo complexidade</span></span>
+            <span class="line-mask"><span class="light" data-reveal="line" data-delay="1160">em software que gera resultado.</span></span>
+          </p>
+          <div class="ctas" data-reveal="up" data-delay="1260">
+            <a class="btn btn--solid" href="projetos.html">Conheça meus projetos <span aria-hidden="true">→</span></a>
+            <a class="btn btn--line" href="#contato">Vamos conversar</a>
+          </div>
+        </div>
+        <div class="scene__col" id="s-col">
+          <div class="scene__c1" id="s-c1">
+            <a class="hl-card" href="sobre.html" data-reveal="up" data-delay="1450">
+              <span class="hl-card__top"><span>Experiência</span><span>Full stack</span></span>
+              <span class="hl-card__big">5 anos</span>
+              <span class="hl-card__t">Hoje na PH Negócios</span>
+              <span class="hl-card__d">Sistemas de crédito consignado. Antes, sistemas industriais na Datawake e no SENAI.</span>
+            </a>
+          </div>
+          <div class="scene__minis">
+            <div class="scene__c2" id="s-c2"><a class="mini-card" href="sobre.html#exp-t"><small>Impacto</small><strong>Eficiência</strong><span>Processos mais curtos e operação orientada a dados.</span></a></div>
+            <div class="scene__c3" id="s-c3"><a class="mini-card" href="sobre.html#comp-t"><small>Stack</small><strong>TypeScript</strong><span>React, Next.js, Node.js e PostgreSQL.</span></a></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- Hero: fluxo normal (mobile / reduced motion) -->
+  <section class="hero-flow" data-screen-label="Início — Hero">
+    <div class="hero-bar" style="padding-bottom:16px"><span>Nº 01 — Início</span><span>Portfólio 2026</span></div>
+    <div class="hero-title flow__title">
+      <svg aria-hidden="true" data-reveal="mask" viewBox="0 0 1000 290"><text class="t-giovanni" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text></svg>
+    </div>
+    <div class="flow__photo">
+      <div class="flow__photo-back" aria-hidden="true"></div>
+      <div class="flow__photo-box" data-reveal="mask" data-delay="200"><div class="img-slot" data-src="assets/img/retrato.webp?v=3" data-label="Retrato de Giovanni"></div></div>
+      <div class="flow__sig" aria-hidden="true" data-reveal="up" data-delay="500"><svg viewBox="0 0 700 250"><text class="t-nespoli" x="350" y="185" text-anchor="middle">Nespoli</text></svg></div>
+    </div>
+    <div class="flow__cols">
+      <div class="flow__lead">
+        <p class="lead-kicker" data-reveal="up">Engenheiro de software</p>
+        <p class="lead-title" data-reveal="up">Transformo complexidade <span class="light">em software que gera resultado.</span></p>
+        <div class="ctas" data-reveal="up">
+          <a class="btn btn--solid" href="projetos.html">Conheça meus projetos <span aria-hidden="true">→</span></a>
+          <a class="btn btn--line" href="#contato">Vamos conversar</a>
+        </div>
+      </div>
+      <div class="flow__cards">
+        <a class="hl-card" href="sobre.html" data-reveal="up">
+          <span class="hl-card__top"><span>Experiência</span><span>Full stack</span></span>
+          <span class="hl-card__big">5 anos</span>
+          <span class="hl-card__t">Hoje na PH Negócios</span>
+          <span class="hl-card__d">Sistemas de crédito consignado. Antes, sistemas industriais na Datawake e no SENAI.</span>
+        </a>
+        <div class="flow__mini">
+          <a class="mini-card" href="sobre.html#exp-t" data-reveal="up"><small>Impacto</small><strong>Eficiência</strong><span>Processos mais curtos e operação orientada a dados.</span></a>
+          <a class="mini-card" href="sobre.html#comp-t" data-reveal="up" data-delay="80"><small>Stack</small><strong>TypeScript</strong><span>React, Next.js, Node.js e PostgreSQL.</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Empresas -->
+  <section class="emp" aria-labelledby="emp-t" data-screen-label="Início — Empresas">
+    <div class="emp__head">
+      <h2 id="emp-t"><span class="line-mask"><span data-reveal="line">Onde meu trabalho <span class="light">gerou impacto</span></span></span></h2>
+      <p class="eyebrow" id="emp-count" data-reveal="up"></p>
+    </div>
+    <ul class="sr-only" id="emp-sr"></ul>
+    <div class="mqw" aria-hidden="true"><div class="mq" id="mq"></div></div>
+  </section>
+</main>
+<footer id="contato" class="foot"></footer>
+
+<script src="assets/js/site.js?v=4"></script>
+<script src="assets/js/hero.js?v=3"></script>
+<script src="assets/js/home.js?v=2"></script>
+</body>
+</html>

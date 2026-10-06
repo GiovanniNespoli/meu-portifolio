@@ -1,0 +1,218 @@
+// Comportamentos compartilhados: nav, menu mobile, cortina, reveal, parallax, image-slot, footer.
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const E = 'cubic-bezier(.22,.61,.36,1)';
+  const isDark = () => document.documentElement.getAttribute('data-theme') === 'dark';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  const LINKS = [
+    { id: 'inicio', label: 'Início', href: 'index.html', num: '01' },
+    { id: 'sobre', label: 'Sobre mim', href: 'sobre.html', num: '02' },
+    { id: 'projetos', label: 'Projetos', href: 'projetos.html', num: '03' }
+  ];
+  const page = document.body.dataset.page || 'inicio';
+
+  /* ---------- Logo: usa imagem se existir, senão wordmark ---------- */
+  function logo(cls, file) {
+    return `<img src="assets/img/logos/${file}" alt="Giovanni Nespoli" onerror="this.outerHTML='<span class=&quot;wordmark&quot;>Giovanni Nespoli</span>'">`;
+  }
+
+  /* ---------- Nav + menu + cortina ---------- */
+  function renderNav() {
+    const li = LINKS.map(l => `<li class="${l.id === page ? 'is-active' : ''}"><a href="${l.href}" ${l.id === page ? 'aria-current="page"' : ''}>${l.label}</a></li>`).join('');
+    const mli = LINKS.map(l => `<li><a href="${l.href}" ${l.id === page ? 'aria-current="page"' : ''}><span>${l.label}</span><span>${l.num}</span></a></li>`).join('');
+    document.body.insertAdjacentHTML('afterbegin', `
+      <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+      <header class="nav"><div class="nav__in">
+        <a class="nav__logo" href="index.html" aria-label="Giovanni Nespoli — Início">${logo('', 'logo-b.webp')}</a>
+        <nav class="nav__desk" aria-label="Principal">
+          <ul class="nav__links">${li}</ul>
+          <!-- MODO ESCURO (desativado por enquanto)
+          <button type="button" class="btn-ghost" data-theme-toggle aria-pressed="${isDark()}">${isDark() ? 'Modo claro' : 'Modo escuro'}</button> -->
+          <a class="btn btn--solid btn--sm" href="#contato">Vamos conversar</a>
+        </nav>
+        <button type="button" class="nav__menu-btn" id="menu-open" aria-expanded="false" aria-controls="menu-mobile">Menu</button>
+      </div></header>
+      <div class="menu" id="menu-mobile" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+        <div class="menu__top"><span class="wordmark">Nespoli</span>
+          <!-- MODO ESCURO (desativado): <button type="button" data-theme-toggle ...> -->
+          <button type="button" id="menu-close">Fechar</button></div>
+        <nav aria-label="Principal (celular)"><ul>${mli}</ul></nav>
+        <a class="menu__cta" href="#contato">Vamos conversar</a>
+      </div>
+      <div class="curtain" aria-hidden="true"><span>Nespoli</span></div>`);
+    $('main').insertAdjacentHTML('beforebegin', '<div class="nav-spacer" aria-hidden="true"></div>');
+
+    const menu = $('#menu-mobile'), openBtn = $('#menu-open');
+    const setMenu = open => {
+      menu.classList.toggle('is-open', open);
+      menu.setAttribute('aria-hidden', String(!open));
+      openBtn.setAttribute('aria-expanded', String(open));
+      $$('a,button', menu).forEach(el => el.tabIndex = open ? 0 : -1);
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) setTimeout(() => $('#menu-close').focus(), 60);
+    };
+    setMenu(false);
+    openBtn.addEventListener('click', () => setMenu(true));
+    $('#menu-close').addEventListener('click', () => setMenu(false));
+    $('.menu__cta').addEventListener('click', () => setMenu(false));
+    addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+    addEventListener('resize', () => { if (innerWidth >= 860) setMenu(false); });
+
+    $$('[data-theme-toggle]').forEach(b => b.addEventListener('click', () => {
+      const dark = !isDark();
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+      try { localStorage.setItem('pf-theme', dark ? 'dark' : 'light'); } catch (e) {}
+      $$('[data-theme-toggle]').forEach(x => { x.textContent = dark ? 'Modo claro' : 'Modo escuro'; x.setAttribute('aria-pressed', String(dark)); });
+      
+      dispatchEvent(new CustomEvent('pf-theme', { detail: dark }));
+    }));
+
+    // Cortina entre páginas
+    const c = $('.curtain');
+    let flag = null;
+    try { flag = sessionStorage.getItem('pf-curtain'); sessionStorage.removeItem('pf-curtain'); } catch (e) {}
+    if (flag === '1' && !reduce) {
+      c.style.transform = 'translateY(0)';
+      const a = c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 650, delay: 100, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards' });
+      a.onfinish = () => { c.style.transform = 'translateY(100%)'; a.cancel(); };
+    }
+    // A cortina real já está no lugar: tira a cópia do <head> (theme.js) no mesmo frame
+    document.documentElement.classList.remove('pf-curtain');
+    addEventListener('pageshow', e => { if (e.persisted) { c.getAnimations().forEach(a => a.cancel()); c.style.transform = 'translateY(100%)'; } });
+    document.addEventListener('click', e => {
+      const a = e.target.closest && e.target.closest('a');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
+      const href = a.getAttribute('href') || '';
+      if (href.startsWith('#') || !/\.html/.test(href)) return;
+      e.preventDefault();
+      try { sessionStorage.setItem('pf-curtain', '1'); } catch (err) {}
+      document.body.style.overflow = '';
+      if (reduce) { location.href = a.href; return; }
+      c.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: 420, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards' }).onfinish = () => { location.href = a.href; };
+    });
+  }
+
+  /* ---------- Footer / contato (dados em data/portfolio-data.json) ---------- */
+  const ICONS = {
+    email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>',
+    github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
+    curriculo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>'
+  };
+  function renderFooter(contato) {
+    // [chave, rótulo (ícone + leitor de tela), href, texto do link]; só o e-mail mostra o próprio valor
+    const defs = [
+      ['email', 'E-mail', v => 'mailto:' + v, v => v],
+      ['linkedin', 'LinkedIn', v => v, () => 'LinkedIn'],
+      ['github', 'GitHub', v => v, () => 'GitHub'],
+      ['curriculo', 'Currículo', v => v, () => 'Currículo']
+    ];
+    const items = defs.map(([k, label, href, show]) => {
+      const v = (contato[k] || '').trim();
+      const body = v
+        ? `<a href="${esc(href(v))}" ${k === 'email' ? '' : 'target="_blank" class="is-caps"'} rel="noopener">${esc(show(v))} ↗</a>`
+        : `<span class="tbd">a definir · contato.${k}</span>`;
+      return `<li data-reveal="up"><span class="foot__ico" role="img" aria-label="${label}">${ICONS[k]}</span>${body}</li>`;
+    }).join('');
+    const f = $('#contato');
+    f.innerHTML = `<div class="foot__in">
+      <span class="eyebrow" data-reveal="up">Contato e contratação</span>
+      <h2><span class="line-mask"><span data-reveal="line">Vamos</span></span><span class="line-mask"><span class="light" data-reveal="line" data-delay="90">conversar.</span></span></h2>
+      <div class="foot__cols">
+        <p class="foot__txt" data-reveal="up">Estou aberto a oportunidades profissionais e a projetos em que interface, negócio e engenharia precisem andar juntos. Conte o contexto e o problema; a conversa começa por aí.</p>
+        <ul class="foot__list">${items}</ul>
+      </div>
+      <div class="foot__logo">${logo('', 'logo-b.webp')}</div>
+      <div class="foot__bar"><span>© 2026 Giovanni Nespoli</span>
+        <nav aria-label="Rodapé">${LINKS.map(l => `<a href="${l.href}">${l.label}</a>`).join('')}</nav></div>
+    </div>`;
+    scanReveal();
+  }
+  
+
+  /* ---------- Image slots: <div class="img-slot" data-src data-label> ---------- */
+  function initSlots(root = document) {
+    $$('.img-slot:not([data-init])', root).forEach(el => {
+      el.dataset.init = '1';
+      const src = el.dataset.src, label = el.dataset.label || 'Imagem a definir';
+      const empty = () => { el.classList.add('is-empty'); el.innerHTML = `<span>${esc(label)}<br><small>${esc(src || '')}</small></span>`; };
+      if (!src) return empty();
+      const img = new Image();
+      img.alt = el.dataset.alt || '';
+      img.onload = () => { el.classList.remove('is-empty'); el.innerHTML = ''; el.appendChild(img); };
+      img.onerror = empty;
+      img.src = src;
+    });
+  }
+
+  /* ---------- Reveal ---------- */
+  let io, targets = new Map();
+  const fromClip = el => el.dataset.from === 'left' ? 'inset(0 100% 0 0)' : el.dataset.from === 'right' ? 'inset(0 0 0 100%)' : 'inset(100% 0 0 0)';
+  function play(el) {
+    const mobile = innerWidth < 720, k = mobile ? .7 : 1;
+    const t = el.dataset.reveal, d = (+el.dataset.delay || 0) * k;
+    if (t === 'line') {
+      el.style.transform = '';
+      el.animate([{ transform: 'translateY(105%)' }, { transform: 'translateY(0)' }], { duration: 850 * k, delay: d, easing: E, fill: 'backwards' });
+    } else if (t === 'mask') {
+      el.style.clipPath = '';
+      el.animate([{ clipPath: fromClip(el) }, { clipPath: 'inset(0 0 0 0)' }], { duration: 900 * k, delay: d, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'backwards' });
+    } else {
+      el.style.opacity = ''; el.style.transform = '';
+      el.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'none' }], { duration: 700 * k, delay: d, easing: E, fill: 'backwards' });
+    }
+  }
+  function scanReveal() {
+    if (reduce || !('IntersectionObserver' in window)) return;
+    if (!io) io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      (targets.get(en.target) || []).forEach(play);
+      targets.delete(en.target);
+    }), { rootMargin: '0px 0px -6% 0px' });
+    $$('[data-reveal]').forEach(el => {
+      if (el.dataset.rv) return;
+      el.dataset.rv = '1';
+      const t = el.dataset.reveal;
+      if (t === 'line') el.style.transform = 'translateY(105%)';
+      else if (t === 'mask') el.style.clipPath = fromClip(el);
+      else { el.style.opacity = '0'; el.style.transform = 'translateY(18px)'; }
+      const tgt = t === 'line' ? el.parentElement : el;
+      if (!targets.has(tgt)) targets.set(tgt, []);
+      targets.get(tgt).push(el);
+      io.observe(tgt);
+    });
+  }
+
+  /* ---------- Crop on scroll ([data-crop]) ---------- */
+  function setupCrop() {
+    if (reduce) return;
+    let raf = 0;
+    const run = () => {
+      raf = 0;
+      if (innerWidth < 720) return;
+      const vh = innerHeight;
+      $$('[data-crop]').forEach(el => {
+        const r = el.getBoundingClientRect();
+        const t = Math.max(0, Math.min(1, (vh - r.top) / (vh * .85)));
+        const c = ((1 - t) * (+el.dataset.crop || 8)).toFixed(2);
+        el.style.clipPath = `inset(${c}% ${c}% ${c}% ${c}%)`;
+      });
+    };
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true });
+    run();
+  }
+
+  window.PF = { scanReveal, initSlots, esc, setupCrop, reduce, isDark,
+    data: fetch('data/portfolio-data.json', { cache: 'no-cache' }).then(r => r.json()).catch(() => ({})) };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderNav();
+    initSlots();
+    scanReveal();
+    PF.data.then(d => renderFooter(d.contato || {}));
+  });
+})();

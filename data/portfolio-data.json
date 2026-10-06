@@ -1,0 +1,97 @@
+{
+  "_leia-me": "Dados editáveis do portfólio. Campos vazios ('') aparecem como 'a definir' no site e não geram links.",
+  "contato": { "email": "ggnespoli@gmail.com", "linkedin": "https://www.linkedin.com/in/giovanni-nespoli-4b6568216/", "github": "https://github.com/GiovanniNespoli", "curriculo": "assets/curriculo-giovanni-nespoli.pdf" },
+  "empresas": ["PH Negócios", "Datawake", "SENAI", "SABÓ", "Honda", "Hyundai"],
+  "experiencias": [
+    {
+      "empresa": "PH Negócios", "cargo": "", "periodo": "", "atual": true,
+      "descricao": "Desenvolvimento de sistemas internos para operações e produtos financeiros. Frontend em Vue.js, backend em Laravel/PHP, integrações REST e automações com Python e RPA.",
+      "destaques": [
+        "Colaboração próxima com as áreas de negócio para entender processos antes de propor soluções.",
+        "Melhoria de processos operacionais, incluindo a automação que reduziu uma rotina financeira de cerca de 2 horas para 5 minutos."
+      ],
+      "stack": ["Vue.js", "Laravel", "PHP", "APIs REST", "Python", "RPA"]
+    },
+    {
+      "empresa": "Datawake", "cargo": "", "periodo": "", "atual": false,
+      "descricao": "Desenvolvimento de soluções web, APIs e dashboards em tempo real no contexto de digitalização industrial.",
+      "destaques": [],
+      "stack": ["React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL"]
+    },
+    {
+      "empresa": "SENAI", "cargo": "Assistente de Serviços Técnicos", "periodo": "", "atual": false,
+      "descricao": "Participação em projetos industriais, com interfaces, integrações e indicadores ligados a OEE e Smart Factory, utilizando tecnologias web e mobile.",
+      "destaques": [],
+      "stack": ["Web", "Mobile", "Indicadores OEE"]
+    },
+    {
+      "empresa": "", "cargo": "Estágio em desenvolvimento", "periodo": "", "atual": false,
+      "descricao": "Apoio ao desenvolvimento web, integrações via APIs, correções e novas funcionalidades.",
+      "destaques": [],
+      "stack": ["Web", "APIs"]
+    }
+  ],
+  "formacao": [],
+  "estudos": [
+    { "titulo": "AWS Solutions Architect Associate", "nota": "Preparação para a certificação. Ainda não obtida." },
+    { "titulo": "Arquitetura de software", "nota": "Padrões, organização de sistemas e decisões de design." },
+    { "titulo": "Agentes de IA", "nota": "Fundamentos e aplicações de agentes em fluxos de trabalho." }
+  ],
+  "cursos": [],
+  "competencias": [
+    { "area": "Frontend", "itens": ["React", "Next.js", "TypeScript", "Vue.js", "Interfaces para operações complexas"] },
+    { "area": "Backend e integrações", "itens": ["Node.js", "Express", "PHP", "Laravel", "APIs REST", "Docker", "Git"] },
+    { "area": "Dados", "itens": ["PostgreSQL", "MySQL", "MariaDB", "MongoDB", "Prisma"] },
+    { "area": "Automação", "itens": ["Python", "RPA", "Automação de processos financeiros e operacionais"] },
+    { "area": "Qualidade", "itens": ["Cypress", "Testes end to end", "Evolução contínua de usabilidade"] }
+  ],
+  "projetos": [
+    {
+      "slug": "automacao-financeira", "tipo": "Profissional", "titulo": "Automação financeira", "cliente": "PH Negócios",
+      "destaque": "2 horas → 5 minutos",
+      "resumo": "Um processo financeiro que levava cerca de duas horas passou a ser executado em cinco minutos.",
+      "contribuicao": "Desenvolvimento da solução a partir do mapeamento feito com o time de projetos.",
+      "contexto": "Um processo financeiro interno levava cerca de duas horas para ser executado. [Detalhe o contexto sem expor dados internos.]",
+      "papel": "O mapeamento do processo foi feito em conjunto com o time de projetos. A partir dele, fui responsável pelo desenvolvimento da solução.",
+      "solucao": "Uma solução que automatiza a execução do processo mapeado. [Descreva a solução em linhas gerais.]",
+      "decisoes": ["Mapear o processo com o time de projetos antes de definir a solução.", "[Adicione decisões técnicas relevantes.]"],
+      "stack": [],
+      "resultado": "A execução passou de cerca de duas horas para cinco minutos.",
+      "links": []
+    },
+    {
+      "slug": "admtf", "tipo": "Pessoal", "titulo": "ADMTF", "cliente": "Sistema de gestão para AD Missão Torre Forte",
+      "destaque": "",
+      "resumo": "Sistema de gestão com módulos de membros, igrejas, visitantes, departamentos e carteirinhas.",
+      "contribuicao": "Concepção e desenvolvimento do sistema, com autenticação e permissões.",
+      "contexto": "A administração da AD Missão Torre Forte precisava organizar informações de membros, igrejas, visitantes e departamentos em um só lugar.",
+      "papel": "Projeto pessoal: concepção, desenvolvimento frontend e backend e modelagem de dados.",
+      "solucao": "Um sistema web dividido em módulos — membros, igrejas, visitantes, departamentos e carteirinhas — com autenticação e controle de permissões.",
+      "decisoes": [
+        "Organização por módulos, alinhada às rotinas administrativas de cada área.",
+        "Autenticação e permissões para controlar o acesso a cada módulo.",
+        "Prisma sobre PostgreSQL para manter a modelagem de dados explícita e tipada."
+      ],
+      "stack": ["Next.js", "React", "TypeScript", "Node.js", "Express", "Prisma", "PostgreSQL"],
+      "resultado": "[Descreva o resultado ou o aprendizado, sem números não verificados.]",
+      "links": []
+    },
+    {
+      "slug": "ttt", "tipo": "Pessoal", "titulo": "TTT — Take the Time", "cliente": "Controle de horas e jornada",
+      "destaque": "",
+      "resumo": "Controle de horas com registros de jornada, banco de horas, filtros e calendário.",
+      "contribuicao": "Interface, regras de cálculo e modelagem de dados.",
+      "contexto": "Registrar a jornada e acompanhar o banco de horas exige regras de cálculo claras e uma interface que não esconda a informação.",
+      "papel": "Projeto pessoal: design da interface, desenvolvimento e definição das regras de cálculo.",
+      "solucao": "Uma aplicação para registrar jornadas, consultar o banco de horas e navegar pelos registros com filtros e calendário.",
+      "decisoes": [
+        "Regras de cálculo do banco de horas organizadas separadamente da interface.",
+        "Calendário e filtros como forma principal de consulta aos registros.",
+        "Componentes shadcn/ui com Tailwind para uma interface consistente e clara."
+      ],
+      "stack": ["Next.js", "React", "TypeScript", "Prisma", "PostgreSQL", "Tailwind", "shadcn/ui"],
+      "resultado": "[Descreva o resultado ou o aprendizado.]",
+      "links": []
+    }
+  ]
+}
