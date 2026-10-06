@@ -8,16 +8,23 @@
 .lead-title { font: 500 clamp(22px, 1.8vw, 27px)/1.1 var(--f-display); text-transform: uppercase; }
 .lead-text { font: 400 14px/1.55 var(--f-body); color: var(--m2); text-wrap: pretty; }
 .ctas { display: flex; flex-wrap: wrap; gap: 10px; }
-.hl-card { display: block; background: var(--ink); color: var(--paper); text-decoration: none; padding: 22px 26px 20px; border: 1px solid var(--ink); }
-.hl-card:hover { color: var(--paper); }
-.hl-card__top { display: flex; justify-content: space-between; font: 500 11px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--m1i); }
+/* hover dos cards: cresce 3,5% como as imagens da galeria; usa `scale` (e não transform) para não brigar com o reveal */
+.hl-card { display: block; background: var(--ink); color: var(--paper); text-decoration: none; padding: 22px 26px 20px; border: 1px solid var(--ink); transition: scale .3s var(--ease); }
+.hl-card:hover { color: var(--paper); scale: 1.035; }
+.hl-card__top { display: flex; justify-content: space-between; align-items: center; font: 500 11px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--m1i); }
 .hl-card__big { display: block; margin-top: 18px; font: 500 clamp(48px, 5vw, 76px)/.95 var(--f-display); text-transform: uppercase; }
 .hl-card__t { display: block; margin-top: 12px; font: 500 17px/1.3 var(--f-body); }
 .hl-card__d { display: block; margin-top: 8px; font: 300 14px/1.55 var(--f-body); color: var(--m2i); }
-.mini-card { display: block; background: var(--paper); color: var(--ink); text-decoration: none; padding: 16px 18px; border: 1px solid var(--ink); }
-.mini-card small { display: block; margin-bottom: 10px; font: 500 11px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--m1); }
+.mini-card { display: block; background: var(--paper); color: var(--ink); text-decoration: none; padding: 16px 18px; border: 1px solid var(--ink); transition: scale .3s var(--ease); }
+.mini-card:hover { scale: 1.035; }
+.mini-card small { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font: 500 11px/1 var(--f-body); letter-spacing: .16em; text-transform: uppercase; color: var(--m1); }
 .mini-card strong { display: block; font: 500 22px/1 var(--f-display); text-transform: uppercase; }
 .mini-card span { display: block; margin-top: 8px; font: 400 13px/1.45 var(--f-body); color: var(--m2); }
+/* seta ↗ (a mesma dos links externos): indica que o card navega */
+.card-arrow { font: 400 18px/1 var(--f-body); font-style: normal; letter-spacing: 0; transition: transform .25s var(--ease); }
+.hl-card .card-arrow { color: var(--paper); }
+.mini-card .card-arrow { color: var(--ink); }
+.hl-card:hover .card-arrow, .mini-card:hover .card-arrow { transform: translate(3px, -3px); }
 
 /* ---------- Hero: cena (desktop) ---------- */
 .hero-scene { display: none; position: relative; height: 190vh; }
