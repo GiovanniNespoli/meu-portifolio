@@ -4,6 +4,8 @@
 (function () {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const TYPE = 60, DELETE = 30, PAUSE = 2000;
+  const signal = window.PF && PF.signal;   // navegação suave (site.js): o loop para quando a página sai
+  const gone = () => signal && signal.aborted;
   const wait = ms => new Promise(r => setTimeout(r, ms));
 
   function setup(el) {
@@ -21,18 +23,19 @@
       for (let i = 0; ; i = (i + 1) % texts.length) {
         const t = texts[i];
         el.classList.add('is-typing');
-        for (let n = 1; n <= t.length; n++) { out.textContent = t.slice(0, n); await wait(TYPE); }
+        for (let n = 1; n <= t.length; n++) { if (gone()) return; out.textContent = t.slice(0, n); await wait(TYPE); }
         el.classList.remove('is-typing');
         if (texts.length === 1) return;
         await wait(PAUSE);
         el.classList.add('is-typing');
-        for (let n = t.length - 1; n >= 0; n--) { out.textContent = t.slice(0, n); await wait(DELETE); }
+        for (let n = t.length - 1; n >= 0; n--) { if (gone()) return; out.textContent = t.slice(0, n); await wait(DELETE); }
       }
     }
 
     // Mesma margem do reveal (site.js), para a digitação sair junto com o fade do elemento
     const io = new IntersectionObserver(([en]) => { if (en.isIntersecting) { io.disconnect(); play(); } }, { rootMargin: '0px 0px -6% 0px' });
     io.observe(el);
+    if (signal) signal.addEventListener('abort', () => io.disconnect());
   }
 
   document.querySelectorAll('[data-text-type]').forEach(setup);

@@ -39,6 +39,16 @@
 .curtain span { font: 400 clamp(48px, 8vw, 96px)/1 var(--f-script); color: var(--paper); }
 /* Cópia da cortina fechada, ativa desde o <head> (theme.js) para a página nova não piscar antes do site.js rodar */
 html.pf-curtain::after { content: 'Nespoli'; position: fixed; inset: 0; z-index: 150; background: var(--ink); pointer-events: none; display: flex; align-items: center; justify-content: center; font: 400 clamp(48px, 8vw, 96px)/1 var(--f-script); color: var(--paper); }
+/* Os links internos trocam só o <main> (navegação suave, site.js), sem trocar de documento. As regras abaixo
+   valem para quando há troca real de documento (falha na navegação suave): o navegador segura a página antiga até
+   a nova renderizar (troca seca; mix-blend-mode: normal evita que ele SOME as duas imagens por um quadro) e o
+   fundo do documento fica escuro, que é a cor usada para preencher o vão entre as páginas.
+   pf-leaving = página que sai (site.js), pf-curtain = página que entra (theme.js). */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.pf-leaving, html.pf-curtain { background-color: var(--ink); }
+/* Depois da navegação suave o foco vai para o título da página nova (leitores de tela); sem contorno visual */
+main:focus, main h1:focus { outline: none; }
 /* Texto digitado (text-type.js): cursor fixo enquanto digita, piscando quando para */
 .text-type__cursor { display: inline-block; animation: tt-blink .5s ease-in-out infinite alternate; }
 .is-typing .text-type__cursor { animation: none; }
@@ -75,4 +85,4 @@ html.pf-curtain::after { content: 'Nespoli'; position: fixed; inset: 0; z-index:
 
 /* logos têm fundo branco: multiplica sobre o papel */
 .nav__logo img, .foot__logo img { mix-blend-mode: multiply; }
-.foot__logo img { filter: invert(1); mix-blend-mode: screen; }
+.foot__logo img { mix-blend-mode: normal; } /* logo-claro.webp já é creme sobre fundo transparente */

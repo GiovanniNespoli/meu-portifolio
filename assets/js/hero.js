@@ -37,9 +37,10 @@
     plane.style.height = (seg(.75, 1) * 6).toFixed(2) + '%';
   }
   const req = () => { if (!raf) raf = requestAnimationFrame(update); };
-  addEventListener('scroll', req, { passive: true });
-  addEventListener('resize', req);
-  if (fine && frozen === null) addEventListener('mousemove', e => { mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1; req(); }, { passive: true });
+  const signal = PF.signal;   // navegação suave (site.js): os listeners saem junto com a página
+  addEventListener('scroll', req, { passive: true, signal });
+  addEventListener('resize', req, { signal });
+  if (fine && frozen === null) addEventListener('mousemove', e => { mx = e.clientX / innerWidth * 2 - 1; my = e.clientY / innerHeight * 2 - 1; req(); }, { passive: true, signal });
   update();
 
   if (frozen === null) {

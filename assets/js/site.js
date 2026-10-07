@@ -13,6 +13,9 @@
     { id: 'projetos', label: 'Projetos', href: 'projetos.html', num: '03' }
   ];
   const page = document.body.dataset.page || 'inicio';
+  // Vida da página atual: os scripts de página registram listeners com { signal: PF.signal }; na navegação suave
+  // o sinal é abortado e eles saem junto com o <main> antigo
+  let pageCtl = new AbortController();
 
   /* ---------- Logo: usa imagem se existir, senão wordmark ---------- */
   function logo(cls, file) {
@@ -76,23 +79,126 @@
     try { flag = sessionStorage.getItem('pf-curtain'); sessionStorage.removeItem('pf-curtain'); } catch (e) {}
     if (flag === '1' && !reduce) {
       c.style.transform = 'translateY(0)';
-      const a = c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 650, delay: 100, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards' });
-      a.onfinish = () => { c.style.transform = 'translateY(100%)'; a.cancel(); };
+      // Só começa a sair depois do primeiro frame de fato exibido (o render da página nova pode ficar suspenso
+      // pela View Transition ou pelo paint holding); assim a saída não "começa pela metade".
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const a = c.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 650, delay: 100, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards' });
+        a.onfinish = () => { c.style.transform = 'translateY(100%)'; a.cancel(); };
+      }));
     }
     // A cortina real já está no lugar: tira a cópia do <head> (theme.js) no mesmo frame
     document.documentElement.classList.remove('pf-curtain');
-    addEventListener('pageshow', e => { if (e.persisted) { c.getAnimations().forEach(a => a.cancel()); c.style.transform = 'translateY(100%)'; } });
+    addEventListener('pageshow', e => { if (e.persisted) { c.getAnimations().forEach(a => a.cancel()); c.style.transform = 'translateY(100%)'; document.documentElement.classList.remove('pf-leaving'); } });
+
+    /* ---------- Navegação suave: troca só o <main>, sem trocar de documento ----------
+       Entre dois documentos o navegador pinta a janela por conta própria por alguns quadros (no Arc, ~80ms de creme
+       liso), e nada na página controla esse vão. Aqui a cortina cobre, o <main> da próxima página entra por baixo,
+       os scripts dela rodam e a cortina sai: sem troca de documento, sem vão. Qualquer falha cai na navegação normal. */
+    // Aba oculta não avança o relógio das animações: aí pula direto para o estado final. O limite de tempo garante
+    // que a navegação nunca fique presa esperando uma animação.
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const animate = (kf, o) => document.hidden ? Promise.resolve()
+      : Promise.race([c.animate(kf, o).finished.catch(() => {}), wait(o.duration + (o.delay || 0) + 400)]);
+    const ease = 'cubic-bezier(.76,0,.24,1)';
+    const cover = () => animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: 420, easing: ease, fill: 'forwards' })
+      .then(() => { c.style.transform = 'translateY(0)'; });
+    const uncover = () => animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 650, delay: 100, easing: ease, fill: 'forwards' })
+      .then(() => { c.style.transform = 'translateY(100%)'; c.getAnimations().forEach(a => a.cancel()); });
+    const pageKey = u => { const x = new URL(u, location.href); return x.pathname + x.search; };
+    const isPageLink = a => a && a.origin === location.origin && a.target !== '_blank' && /\.html/.test(a.getAttribute('href') || '') && !(a.getAttribute('href') || '').startsWith('#');
+    const pages = new Map();
+    const getPage = u => {
+      const k = pageKey(u);
+      if (!pages.has(k)) pages.set(k, fetch(k).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); }).catch(err => { pages.delete(k); throw err; }));
+      return pages.get(k);
+    };
+    const loadSheet = href => new Promise(res => {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = href; l.onload = l.onerror = res;
+      document.head.appendChild(l); setTimeout(res, 3000);
+    });
+    async function runScripts(doc, base) {
+      $$('body > script[src]').forEach(s => { if (!/\/site\.js/.test(s.src)) s.remove(); });
+      for (const s of doc.querySelectorAll('body script[src]')) {
+        const src = new URL(s.getAttribute('src'), base).href;
+        if (/\/site\.js/.test(src)) continue;
+        await new Promise(res => { const n = document.createElement('script'); n.src = src; n.onload = n.onerror = res; document.body.appendChild(n); });
+      }
+    }
+    function markNav(id) {
+      const desk = $$('.nav__links li'), mob = $$('#menu-mobile nav a');
+      LINKS.forEach((l, i) => {
+        const on = l.id === id;
+        desk[i].classList.toggle('is-active', on);
+        [desk[i].querySelector('a'), mob[i]].forEach(a => on ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+      });
+    }
+    // leitores de tela: o foco vai para o título da página nova (ou para o <main> se o título estiver oculto)
+    const focusMain = () => { const h = $('main h1'), t = h && h.getClientRects().length ? h : $('main'); t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); };
+
+    let current = pageKey(location.href), busy = false, pending = false;
+    async function go(url, { push = true, curtain = !reduce, y = 0 } = {}) {
+      if (busy) return;
+      busy = true;
+      setMenu(false);
+      try {
+        const [html] = await Promise.all([getPage(url), curtain ? cover() : null]);
+        const doc = new DOMParser().parseFromString(html, 'text/html'), main = doc.querySelector('main');
+        if (!main) throw new Error('página sem <main>');
+        // CSS da página nova carregado antes da troca (home.css x pages.css)
+        const next = $$('link[rel="stylesheet"]', doc).map(l => new URL(l.getAttribute('href'), url).href), now = $$('link[rel="stylesheet"]');
+        await Promise.all(next.filter(h => !now.some(l => l.href === h)).map(loadSheet));
+        // sai a página atual: listeners dos scripts dela (PF.signal) e observadores de reveal
+        pageCtl.abort(); pageCtl = new AbortController();
+        if (push) {
+          history.scrollRestoration = 'manual';
+          history.replaceState({ ...(history.state || {}), y: scrollY }, '');
+          history.pushState({ y: 0 }, '', url);
+        }
+        current = pageKey(url);
+        document.title = doc.title;
+        const desc = $('meta[name="description"]', doc), mine = $('meta[name="description"]');
+        if (desc && mine) mine.content = desc.content; else if (desc) document.head.appendChild(desc.cloneNode()); else if (mine) mine.remove();
+        document.body.dataset.page = doc.body.dataset.page || 'inicio';
+        $('main').replaceWith(document.adoptNode(main));
+        now.forEach(l => { if (!next.includes(l.href)) l.remove(); });
+        pruneReveal();
+        markNav(document.body.dataset.page);
+        scrollTo({ top: y, behavior: 'instant' });
+        await runScripts(doc, url);
+        initSlots(); scanReveal();
+        await PF.data;   // páginas que montam conteúdo a partir do JSON já renderizaram (a âncora #... fica no lugar certo)
+        const hash = new URL(url, location.href).hash;
+        if (hash) { const t = document.getElementById(decodeURIComponent(hash.slice(1))); if (t) t.scrollIntoView({ behavior: 'instant' }); }
+        focusMain();
+        if (curtain) await uncover();
+      } catch (err) {
+        // falhou (rede, 404, HTML inesperado): navegação normal; a página nova abre com a cópia da cortina (theme.js)
+        try { sessionStorage.setItem('pf-curtain', '1'); } catch (e) {}
+        document.documentElement.classList.add('pf-leaving');
+        location.href = url;
+        return;
+      } finally { busy = false; }
+      if (pending) { pending = false; if (pageKey(location.href) !== current) go(location.href, { push: false, curtain: false }); }
+    }
+
     document.addEventListener('click', e => {
       const a = e.target.closest && e.target.closest('a');
-      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target === '_blank') return;
-      const href = a.getAttribute('href') || '';
-      if (href.startsWith('#') || !/\.html/.test(href)) return;
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || !isPageLink(a)) return;
       e.preventDefault();
-      try { sessionStorage.setItem('pf-curtain', '1'); } catch (err) {}
       document.body.style.overflow = '';
-      if (reduce) { location.href = a.href; return; }
-      c.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: 420, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards' }).onfinish = () => { location.href = a.href; };
+      go(a.href);
     });
+    // voltar/avançar: troca direto, sem cortina (como o navegador faria), restaurando a rolagem daquela entrada
+    addEventListener('popstate', e => {
+      if (pageKey(location.href) === current) return;   // só mudou o #hash
+      if (busy) { pending = true; return; }
+      go(location.href, { push: false, curtain: false, y: (e.state && e.state.y) || 0 });
+    });
+    // pré-carrega o HTML ao passar o mouse/focar um link, para a troca acontecer assim que a cortina cobre
+    const prefetch = e => { const a = e.target.closest && e.target.closest('a[href]'); if (isPageLink(a)) getPage(a.href).catch(() => {}); };
+    document.addEventListener('pointerover', prefetch, { passive: true });
+    document.addEventListener('focusin', prefetch);
   }
 
   /* ---------- Footer / contato (dados em data/portfolio-data.json) ---------- */
@@ -125,7 +231,7 @@
         <p class="foot__txt" data-reveal="up">Estou aberto a oportunidades profissionais e a projetos em que interface, negócio e engenharia precisem andar juntos. Conte o contexto e o problema; a conversa começa por aí.</p>
         <ul class="foot__list">${items}</ul>
       </div>
-      <div class="foot__logo">${logo('', 'logo-b.webp')}</div>
+      <div class="foot__logo">${logo('', 'logo-claro.webp')}</div>
       <div class="foot__bar"><span>© 2026 Giovanni Nespoli</span>
         <nav aria-label="Rodapé">${LINKS.map(l => `<a href="${l.href}">${l.label}</a>`).join('')}</nav></div>
     </div>`;
@@ -187,6 +293,11 @@
     });
   }
 
+  // depois de trocar o <main>: para de observar o que saiu da página (o rodapé, que fica, continua observado)
+  function pruneReveal() {
+    targets.forEach((els, tgt) => { if (!tgt.isConnected) { if (io) io.unobserve(tgt); targets.delete(tgt); } });
+  }
+
   /* ---------- Crop on scroll ([data-crop]) ---------- */
   function setupCrop() {
     if (reduce) return;
@@ -202,11 +313,12 @@
         el.style.clipPath = `inset(${c}% ${c}% ${c}% ${c}%)`;
       });
     };
-    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true });
+    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true, signal: pageCtl.signal });
     run();
   }
 
   window.PF = { scanReveal, initSlots, esc, setupCrop, reduce, isDark,
+    get signal() { return pageCtl.signal; },
     data: fetch('data/portfolio-data.json', { cache: 'no-cache' }).then(r => r.json()).catch(() => ({})) };
 
   document.addEventListener('DOMContentLoaded', () => {
