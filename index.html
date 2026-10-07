@@ -6,11 +6,13 @@
 <title>Giovanni Nespoli — Engenheiro de software</title>
 <meta name="description" content="Giovanni Nespoli, engenheiro de software.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <script src="assets/js/theme.js?v=2"></script>
-<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Great+Vibes&family=Oswald:wght@300..700&family=Outfit:wght@200..600&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css?v=2">
 <link rel="stylesheet" href="assets/css/base.css">
-<link rel="stylesheet" href="assets/css/components.css?v=4">
-<link rel="stylesheet" href="assets/css/home.css?v=8">
+<link rel="stylesheet" href="assets/css/components.css?v=9">
+<link rel="stylesheet" href="assets/css/home.css?v=9">
 </head>
 <body data-page="inicio">
 <main id="conteudo">
@@ -23,7 +25,11 @@
         <div class="hero-bar"><span>Nº 01 — Início</span><span>Portfólio 2026</span></div>
         <h1 class="hero-title scene__title" id="s-title">
           <span class="sr-only">Giovanni Nespoli</span>
-          <svg id="s-title-svg" aria-hidden="true" viewBox="0 0 1000 290"><text class="t-giovanni" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text></svg>
+          <svg id="s-title-svg" aria-hidden="true" viewBox="0 0 1000 290">
+            <defs><mask id="gv-mask-s"><text class="t-giovanni-mask" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text></mask></defs>
+            <g mask="url(#gv-mask-s)"><rect class="t-code__fill" x="-10" y="-10" width="1020" height="310"/><image class="t-code" href="assets/img/code-texture.svg" x="0" y="-20" width="1000" height="330"/></g>
+            <text class="t-giovanni" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text>
+          </svg>
         </h1>
         <div class="scene__photo" id="s-photo">
           <div class="scene__photo-back" aria-hidden="true"></div>
@@ -56,7 +62,7 @@
           </div>
           <div class="scene__minis">
             <div class="scene__c2" id="s-c2"><a class="mini-card" href="sobre.html#exp-t"><small>Impacto<i class="card-arrow" aria-hidden="true">↗</i></small><strong>Eficiência</strong><span>Processos mais curtos e operação orientada a dados.</span></a></div>
-            <div class="scene__c3" id="s-c3"><a class="mini-card" href="sobre.html#comp-t"><small>Stack<i class="card-arrow" aria-hidden="true">↗</i></small><strong>TypeScript</strong><span>React, Next.js, Node.js e PostgreSQL.</span></a></div>
+            <div class="scene__c3" id="s-c3"><a class="mini-card" href="sobre.html#comp-t"><small>Stack<i class="card-arrow" aria-hidden="true">↗</i></small><strong>AI Agent</strong><span>MCP, RAG, Laravel, React e PostgreSQL.</span></a></div>
           </div>
         </div>
       </div></div>
@@ -67,7 +73,11 @@
   <section class="hero-flow" data-screen-label="Início — Hero">
     <div class="hero-bar" style="padding-bottom:16px"><span>Nº 01 — Início</span><span>Portfólio 2026</span></div>
     <div class="hero-title flow__title">
-      <svg aria-hidden="true" data-reveal="mask" viewBox="0 0 1000 290"><text class="t-giovanni" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text></svg>
+      <svg aria-hidden="true" data-reveal="mask" viewBox="0 0 1000 290">
+        <defs><mask id="gv-mask-f"><text class="t-giovanni-mask" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text></mask></defs>
+        <g mask="url(#gv-mask-f)"><rect class="t-code__fill" x="-10" y="-10" width="1020" height="310"/><image class="t-code" href="assets/img/code-texture.svg" x="0" y="-20" width="1000" height="330"/></g>
+        <text class="t-giovanni" x="500" y="270" text-anchor="middle" textLength="1000" lengthAdjust="spacingAndGlyphs">GIOVANNI</text>
+      </svg>
     </div>
     <div class="flow__photo">
       <div class="flow__photo-back" aria-hidden="true"></div>
@@ -92,7 +102,7 @@
         </a>
         <div class="flow__mini">
           <a class="mini-card" href="sobre.html#exp-t" data-reveal="up"><small>Impacto<i class="card-arrow" aria-hidden="true">↗</i></small><strong>Eficiência</strong><span>Processos mais curtos e operação orientada a dados.</span></a>
-          <a class="mini-card" href="sobre.html#comp-t" data-reveal="up" data-delay="80"><small>Stack<i class="card-arrow" aria-hidden="true">↗</i></small><strong>TypeScript</strong><span>React, Next.js, Node.js e PostgreSQL.</span></a>
+          <a class="mini-card" href="sobre.html#comp-t" data-reveal="up" data-delay="80"><small>Stack<i class="card-arrow" aria-hidden="true">↗</i></small><strong>AI Agent</strong><span>MCP, RAG, Laravel, React e PostgreSQL.</span></a>
         </div>
       </div>
     </div>
@@ -110,9 +120,9 @@
 </main>
 <footer id="contato" class="foot"></footer>
 
-<script src="assets/js/site.js?v=4"></script>
-<script src="assets/js/hero.js?v=3"></script>
+<script src="assets/js/site.js?v=9"></script>
+<script src="assets/js/hero.js?v=4"></script>
 <script src="assets/js/home.js?v=2"></script>
-<script src="assets/js/text-type.js"></script>
+<script src="assets/js/text-type.js?v=2"></script>
 </body>
 </html>
