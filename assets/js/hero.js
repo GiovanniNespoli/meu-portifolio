@@ -5,7 +5,7 @@
   const q = id => document.getElementById(id);
   const sticky = scene.querySelector('.scene__sticky'), inn = q('s-inner'), plane = q('s-plane');
   const gIn = q('s-title-svg'), ph = q('s-photo'), phIn = q('s-photo-in'), phImg = q('s-photo-img');
-  const n = q('s-sig'), nIn = q('s-sig-svg'), col = q('s-col'), c1 = q('s-c1'), c2 = q('s-c2'), c3 = q('s-c3');
+  const n = q('s-sig'), nIn = q('s-sig-svg'), col = q('s-col'), c1 = q('s-c1'), c2 = q('s-c2'), c3 = q('s-c3'), c4 = q('s-c4'), c5 = q('s-c5');
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const fq = new URLSearchParams(location.search).get('hero');
   const frozen = fq !== null && !isNaN(+fq) ? Math.max(0, Math.min(1, +fq)) : null;
@@ -28,7 +28,8 @@
     const e1 = seg(.42, .95), k = .7;
     const dx0 = (W - c1.offsetWidth * k) - col.offsetLeft, dy0 = H * .3;
     c1.style.transform = `translate3d(${(dx0 * (1 - e1)).toFixed(1)}px,${(dy0 * (1 - e1)).toFixed(1)}px,0) scale(${(k + (1 - k) * e1).toFixed(4)})`;
-    [[c2, seg(.6, .9)], [c3, seg(.68, .98)]].forEach(([el, t]) => {
+    // grade 2×2 entra em diagonal: c2, depois c3 e c4 juntos, por último c5
+    [[c2, seg(.6, .9)], [c3, seg(.66, .96)], [c4, seg(.66, .96)], [c5, seg(.72, 1)]].forEach(([el, t]) => {
       el.style.opacity = t.toFixed(3);
       el.style.transform = `translateY(${(40 * (1 - t)).toFixed(1)}px)`;
       el.style.pointerEvents = t > .5 ? 'auto' : 'none';
