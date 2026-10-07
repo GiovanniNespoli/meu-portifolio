@@ -1,4 +1,4 @@
-// Sobre: timeline, estudos, cursos, formação e competências a partir do JSON
+// Sobre: timeline, estudos, formação e competências a partir do JSON
 (function () {
   const { esc, scanReveal } = PF;
   const $ = id => document.getElementById(id);
@@ -12,16 +12,25 @@
           ${e.periodo ? `<span>${esc(e.periodo)}</span>` : '<span class="ph-chip">período a definir</span>'}</div>
         <h3>${e.empresa ? esc(e.empresa) : '<span class="tbd-t">Empresa a definir</span>'}</h3>
         <p class="tl__role">${e.cargo ? esc(e.cargo) : '<span class="ph-chip">cargo a definir</span>'}</p>
-        <p class="tl__desc">${esc(e.descricao || '')}</p>
-        <ul class="tl__hl">${(e.destaques || []).map(x => `<li><span aria-hidden="true">—</span><span>${esc(x)}</span></li>`).join('')}</ul>
-        <p class="tl__stack">${(e.stack || []).map(esc).join('  ·  ')}</p>
+        ${e.contexto ? `<p class="tl__ctx">${esc(e.contexto)}</p>` : ''}
+        ${(e.entregas || []).length ? `<p class="lbl tl__lbl">Projetos e resultados</p>
+        <ul class="rows tl__wins">${e.entregas.map(x => `<li>
+          <div class="row-top"><span class="row-t">${esc(x.titulo)}</span>${x.resultado ? `<span class="badge">${esc(x.resultado)}</span>` : ''}</div>
+          <span class="row-n">${esc(x.texto || '')}</span>
+          ${x.caso ? `<a class="tl__case" href="projeto.html?caso=${encodeURIComponent(x.caso)}">Ver estudo de caso <span aria-hidden="true">↗</span></a>` : ''}
+        </li>`).join('')}</ul>` : ''}
+        ${(e.stack || []).length ? `<p class="lbl tl__lbl">Tecnologias</p><p class="tl__stack">${e.stack.map(esc).join('  ·  ')}</p>` : ''}
       </li>`).join(''));
 
-    $('estudos').innerHTML = (d.estudos || []).map(s => `<li data-reveal="up"><div class="row-top"><span class="row-t">${esc(s.titulo)}</span><span class="badge">Em andamento</span></div><span class="row-n">${esc(s.nota || '')}</span></li>`).join('');
+    // estudos: "proximo": true marca um estudo planejado (selo tracejado "Próximo")
+    $('estudos').innerHTML = (d.estudos || []).map(s => {
+      const quando = [s.instituicao, s.periodo].filter(Boolean).map(esc).join(' · ');
+      return `<li data-reveal="up"><div class="row-top"><span class="row-t">${esc(s.titulo)}</span><span class="badge${s.proximo ? ' badge--next' : ''}">${s.proximo ? 'Próximo' : 'Em andamento'}</span></div>
+        ${quando ? `<span class="lbl">${quando}</span>` : ''}${s.nota ? `<span class="row-n">${esc(s.nota)}</span>` : ''}</li>`;
+    }).join('');
     const rows = (arr, empty) => arr.length
       ? arr.map(c => `<li class="row-top"><span class="row-t">${esc(c.nome)}</span><span class="row-n">${esc(c.instituicao || '')} · ${esc(c.periodo || '')}</span></li>`).join('')
       : `<li class="empty" data-reveal="up">${empty}</li>`;
-    $('cursos').innerHTML = rows(d.cursos || [], 'Nenhum curso cadastrado. Adicione nome, instituição e período em <span class="ph-chip">cursos</span>.');
     $('formacao').innerHTML = rows(d.formacao || [], 'A preencher em <span class="ph-chip">formacao</span>.');
     $('skills').innerHTML = (d.competencias || []).map((g, i) => `<div class="skill" data-reveal="up"><p class="n">${String(i + 1).padStart(2, '0')}</p><h3>${esc(g.area)}</h3><ul>${g.itens.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
     scanReveal();
@@ -40,6 +49,7 @@
       items.forEach((it, i) => i === a ? it.setAttribute('aria-current', 'step') : it.removeAttribute('aria-current'));
     };
     const req = () => { if (!raf) raf = requestAnimationFrame(run); };
-    addEventListener('scroll', req, { passive: true }); addEventListener('resize', req); run();
+    const signal = PF.signal;   // navegação suave (site.js): os listeners saem junto com a página
+    addEventListener('scroll', req, { passive: true, signal }); addEventListener('resize', req, { signal }); run();
   });
 })();

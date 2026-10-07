@@ -1,66 +1,250 @@
 {
   "_leia-me": "Dados editáveis do portfólio. Campos vazios ('') aparecem como 'a definir' no site e não geram links.",
-  "contato": { "email": "ggnespoli@gmail.com", "linkedin": "https://www.linkedin.com/in/giovanni-nespoli-4b6568216/", "github": "https://github.com/GiovanniNespoli", "curriculo": "assets/curriculo-giovanni-nespoli.pdf" },
-  "empresas": ["PH Negócios", "Datawake", "SENAI", "SABÓ", "Honda", "Hyundai"],
+  "contato": {
+    "email": "ggnespoli@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/giovanni-nespoli-4b6568216/",
+    "github": "https://github.com/GiovanniNespoli",
+    "curriculo": "assets/curriculo-giovanni-nespoli.pdf"
+  },
+  "empresas": [
+    "PH Negócios",
+    "Datawake",
+    "SENAI",
+    "SABÓ",
+    "Honda",
+    "Hyundai"
+  ],
   "experiencias": [
     {
-      "empresa": "PH Negócios", "cargo": "", "periodo": "", "atual": true,
-      "descricao": "Desenvolvimento de sistemas internos para operações e produtos financeiros. Frontend em Vue.js, backend em Laravel/PHP, integrações REST e automações com Python e RPA.",
-      "destaques": [
-        "Colaboração próxima com as áreas de negócio para entender processos antes de propor soluções.",
-        "Melhoria de processos operacionais, incluindo a automação que reduziu uma rotina financeira de cerca de 2 horas para 5 minutos."
+      "empresa": "PH Negócios",
+      "cargo": "Desenvolvedor Pleno",
+      "periodo": "Desde abr 2026",
+      "atual": true,
+      "contexto": "Sistemas internos e automações para a operação de crédito consignado.",
+      "entregas": [
+        {
+          "titulo": "Automação de rotina financeira",
+          "resultado": "2h → 5min",
+          "caso": "automacao-financeira",
+          "texto": "Uma rotina financeira que levava cerca de duas horas passou a rodar em cinco minutos."
+        },
+        {
+          "titulo": "Sistema de crédito consignado",
+          "texto": "Operação mais rápida e com menos erros manuais, permitindo crescer em volume sem aumentar o time."
+        },
+        {
+          "titulo": "Robôs e integrações",
+          "texto": "RPA em portais de bancos e convênios, integrações REST entre sistemas internos e parceiros, leitura de documentos e relatórios que antes eram montados à mão."
+        },
+        {
+          "titulo": "IA no desenvolvimento",
+          "texto": "Agentes no fluxo de desenvolvimento para entregar mais rápido, RAG sobre as regras de negócio internas e MCP conectando a IA aos sistemas da empresa."
+        }
       ],
-      "stack": ["Vue.js", "Laravel", "PHP", "APIs REST", "Python", "RPA"]
+      "stack": [
+        "Vue.js",
+        "Laravel",
+        "PHP",
+        "APIs REST",
+        "Python",
+        "RPA",
+        "MCP",
+        "RAG"
+      ]
     },
     {
-      "empresa": "Datawake", "cargo": "", "periodo": "", "atual": false,
-      "descricao": "Desenvolvimento de soluções web, APIs e dashboards em tempo real no contexto de digitalização industrial.",
-      "destaques": [],
-      "stack": ["React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL"]
+      "empresa": "Datawake",
+      "cargo": "Técnico Pleno · Full Stack",
+      "periodo": "Jun 2025 – Mar 2026",
+      "atual": false,
+      "contexto": "Soluções web, APIs e dashboards para digitalização industrial.",
+      "entregas": [
+        {
+          "titulo": "Dashboards em tempo real",
+          "texto": "Produção e paradas de máquinas acompanhadas ao vivo por supervisores e gestores de produção."
+        },
+        {
+          "titulo": "APIs para dados de máquinas",
+          "texto": "APIs com foco em performance, recebendo continuamente os dados de várias máquinas."
+        },
+        {
+          "titulo": "Performance das telas",
+          "texto": "Otimização de carregamento e resposta das interfaces guiada por Web Vitals."
+        }
+      ],
+      "stack": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Node.js",
+        "Express",
+        "PostgreSQL"
+      ]
     },
     {
-      "empresa": "SENAI", "cargo": "Assistente de Serviços Técnicos", "periodo": "", "atual": false,
-      "descricao": "Participação em projetos industriais, com interfaces, integrações e indicadores ligados a OEE e Smart Factory, utilizando tecnologias web e mobile.",
-      "destaques": [],
-      "stack": ["Web", "Mobile", "Indicadores OEE"]
-    },
-    {
-      "empresa": "", "cargo": "Estágio em desenvolvimento", "periodo": "", "atual": false,
-      "descricao": "Apoio ao desenvolvimento web, integrações via APIs, correções e novas funcionalidades.",
-      "destaques": [],
-      "stack": ["Web", "APIs"]
+      "empresa": "SENAI",
+      "cargo": "Estagiário em Desenvolvimento → Assistente de Serviços Técnicos",
+      "periodo": "Mai 2022 – Jun 2025",
+      "atual": false,
+      "contexto": "Projetos de digitalização industrial para empresas como Honda, Hyundai e SABÓ.",
+      "entregas": [
+        {
+          "titulo": "Sistemas de OEE e Smart Factory",
+          "texto": "Indicadores de disponibilidade, performance e qualidade das linhas, com dados coletados direto das máquinas. Substituíram o controle em papel e planilha e passaram a orientar as decisões dos gestores das fábricas."
+        },
+        {
+          "titulo": "Watch Winder",
+          "texto": "App mobile que controla as voltas e a direção de um winder via Bluetooth Low Energy, conversando com um ESP32."
+        },
+        {
+          "titulo": "Base no estágio",
+          "texto": "Integrações via APIs, correções e novas funcionalidades nos sistemas web."
+        }
+      ],
+      "stack": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "React Native",
+        "ESP32",
+        "Bluetooth Low Energy"
+      ]
     }
   ],
-  "formacao": [],
-  "estudos": [
-    { "titulo": "AWS Solutions Architect Associate", "nota": "Preparação para a certificação. Ainda não obtida." },
-    { "titulo": "Arquitetura de software", "nota": "Padrões, organização de sistemas e decisões de design." },
-    { "titulo": "Agentes de IA", "nota": "Fundamentos e aplicações de agentes em fluxos de trabalho." }
+  "formacao": [
+    {
+      "nome": "MBA em Engenharia de Software",
+      "instituicao": "USP/ESALQ",
+      "periodo": "2024–2025"
+    },
+    {
+      "nome": "Tecnólogo em Análise e Desenvolvimento de Sistemas",
+      "instituicao": "SENAI",
+      "periodo": "2022–2023"
+    },
+    {
+      "nome": "Técnico em Desenvolvimento de Sistemas",
+      "instituicao": "SENAI",
+      "periodo": "2020–2021"
+    }
   ],
-  "cursos": [],
+  "estudos": [
+    {
+      "titulo": "AWS Solutions Architect Associate",
+      "periodo": "Set 2026 – Dez 2026",
+      "nota": "Preparação para a certificação. Ainda não obtida."
+    },
+    {
+      "titulo": "IA para Devs",
+      "instituicao": "FIAP",
+      "periodo": "Jan 2027",
+      "proximo": true
+    }
+  ],
   "competencias": [
-    { "area": "Frontend", "itens": ["React", "Next.js", "TypeScript", "Vue.js", "Interfaces para operações complexas"] },
-    { "area": "Backend e integrações", "itens": ["Node.js", "Express", "PHP", "Laravel", "APIs REST", "Docker", "Git"] },
-    { "area": "Dados", "itens": ["PostgreSQL", "MySQL", "MariaDB", "MongoDB", "Prisma"] },
-    { "area": "Automação", "itens": ["Python", "RPA", "Automação de processos financeiros e operacionais"] },
-    { "area": "Qualidade", "itens": ["Cypress", "Testes end to end", "Evolução contínua de usabilidade"] }
+    {
+      "area": "Inteligência artificial",
+      "itens": [
+        "MCP",
+        "RAG",
+        "Agentes de IA no desenvolvimento",
+        "Automações com IA"
+      ]
+    },
+    {
+      "area": "Frontend",
+      "itens": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Vue.js",
+        "Interfaces para operações complexas",
+        "HTML e CSS"
+      ]
+    },
+    {
+      "area": "Backend e integrações",
+      "itens": [
+        "Node.js",
+        "Express",
+        "PHP",
+        "Laravel",
+        "APIs REST",
+        "Docker",
+        "Git",
+        "CI/CD"
+      ]
+    },
+    {
+      "area": "Dados",
+      "itens": [
+        "PostgreSQL",
+        "MySQL",
+        "MariaDB",
+        "MongoDB",
+        "Prisma"
+      ]
+    },
+    {
+      "area": "Automação",
+      "itens": [
+        "Python",
+        "RPA",
+        "Automação de processos financeiros e operacionais"
+      ]
+    },
+    {
+      "area": "Qualidade",
+      "itens": [
+        "Cypress",
+        "Testes end to end",
+        "Evolução contínua de usabilidade",
+        "Artillery (testes de carga)",
+        "Web Vitals"
+      ]
+    },
+    {
+      "area": "Arquitetura e métodos",
+      "itens": [
+        "Clean Architecture",
+        "DDD",
+        "Scrum",
+        "Kanban"
+      ]
+    },
+    {
+      "area": "Idiomas",
+      "itens": [
+        "Português (nativo)",
+        "Inglês (intermediário)"
+      ]
+    }
   ],
   "projetos": [
     {
-      "slug": "automacao-financeira", "tipo": "Profissional", "titulo": "Automação financeira", "cliente": "PH Negócios",
+      "slug": "automacao-financeira",
+      "tipo": "Profissional",
+      "titulo": "Automação financeira",
+      "cliente": "PH Negócios",
       "destaque": "2 horas → 5 minutos",
       "resumo": "Um processo financeiro que levava cerca de duas horas passou a ser executado em cinco minutos.",
       "contribuicao": "Desenvolvimento da solução a partir do mapeamento feito com o time de projetos.",
       "contexto": "Um processo financeiro interno levava cerca de duas horas para ser executado. [Detalhe o contexto sem expor dados internos.]",
       "papel": "O mapeamento do processo foi feito em conjunto com o time de projetos. A partir dele, fui responsável pelo desenvolvimento da solução.",
       "solucao": "Uma solução que automatiza a execução do processo mapeado. [Descreva a solução em linhas gerais.]",
-      "decisoes": ["Mapear o processo com o time de projetos antes de definir a solução.", "[Adicione decisões técnicas relevantes.]"],
+      "decisoes": [
+        "Mapear o processo com o time de projetos antes de definir a solução.",
+        "[Adicione decisões técnicas relevantes.]"
+      ],
       "stack": [],
       "resultado": "A execução passou de cerca de duas horas para cinco minutos.",
       "links": []
     },
     {
-      "slug": "admtf", "tipo": "Pessoal", "titulo": "ADMTF", "cliente": "Sistema de gestão para AD Missão Torre Forte",
+      "slug": "admtf",
+      "tipo": "Pessoal",
+      "titulo": "ADMTF",
+      "cliente": "Sistema de gestão para AD Missão Torre Forte",
       "destaque": "",
       "resumo": "Sistema de gestão com módulos de membros, igrejas, visitantes, departamentos e carteirinhas.",
       "contribuicao": "Concepção e desenvolvimento do sistema, com autenticação e permissões.",
@@ -72,12 +256,23 @@
         "Autenticação e permissões para controlar o acesso a cada módulo.",
         "Prisma sobre PostgreSQL para manter a modelagem de dados explícita e tipada."
       ],
-      "stack": ["Next.js", "React", "TypeScript", "Node.js", "Express", "Prisma", "PostgreSQL"],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Node.js",
+        "Express",
+        "Prisma",
+        "PostgreSQL"
+      ],
       "resultado": "[Descreva o resultado ou o aprendizado, sem números não verificados.]",
       "links": []
     },
     {
-      "slug": "ttt", "tipo": "Pessoal", "titulo": "TTT — Take the Time", "cliente": "Controle de horas e jornada",
+      "slug": "ttt",
+      "tipo": "Pessoal",
+      "titulo": "TTT — Take the Time",
+      "cliente": "Controle de horas e jornada",
       "destaque": "",
       "resumo": "Controle de horas com registros de jornada, banco de horas, filtros e calendário.",
       "contribuicao": "Interface, regras de cálculo e modelagem de dados.",
@@ -89,7 +284,15 @@
         "Calendário e filtros como forma principal de consulta aos registros.",
         "Componentes shadcn/ui com Tailwind para uma interface consistente e clara."
       ],
-      "stack": ["Next.js", "React", "TypeScript", "Prisma", "PostgreSQL", "Tailwind", "shadcn/ui"],
+      "stack": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "Tailwind",
+        "shadcn/ui"
+      ],
       "resultado": "[Descreva o resultado ou o aprendizado.]",
       "links": []
     }
