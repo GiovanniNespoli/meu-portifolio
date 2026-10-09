@@ -9,24 +9,17 @@
 .ph-chip { border: 1px dashed rgba(var(--ink-rgb), .45); padding: 4px 9px; font: 400 13px var(--f-body); text-transform: none; letter-spacing: .02em; }
 
 /* ---------- Sobre ---------- */
-.about-open { padding-top: clamp(28px, 5vw, 64px); padding-bottom: clamp(80px, 10vw, 140px); }
+.about-open { padding-top: clamp(28px, 5vw, 64px); padding-bottom: 0; }
 .about-open h1 { margin-top: clamp(40px, 6vw, 88px); }
 .about-open h1 .light { padding-left: clamp(0px, 12vw, 220px); }
 .about-cols { display: flex; flex-wrap: wrap; gap: 48px clamp(40px, 7vw, 120px); margin-top: clamp(56px, 7vw, 100px); align-items: flex-start; }
-.about-fig { flex: 0 1 400px; margin: 0; position: sticky; top: 100px; align-self: flex-start; }
+.about-fig { flex: 0 1 400px; margin: 0; position: sticky; top: 100px; align-self: flex-start; will-change: transform; }
 .about-fig__box { aspect-ratio: 3/4; position: relative; overflow: hidden; background: var(--tile); }
 .about-fig figcaption { margin-top: 12px; font: 400 13px/1.5 var(--f-body); color: var(--m1); letter-spacing: .02em; text-wrap: pretty; }
 .about-txt { flex: 1 1 440px; max-width: 640px; display: flex; flex-direction: column; gap: 24px; }
 .about-txt .big { font: 400 clamp(24px, 2.4vw, 32px)/1.35 var(--f-display); text-wrap: pretty; }
 .about-txt p:not(.big) { font: 400 17px/1.7 var(--f-body); color: var(--m2); text-wrap: pretty; }
 .about-txt .btn { align-self: flex-start; }
-.habits { padding-top: clamp(80px, 10vw, 140px); padding-bottom: clamp(80px, 10vw, 140px); }
-.habits h2 { font: 500 clamp(40px, 5.4vw, 80px)/1.02 var(--f-display); text-transform: uppercase; max-width: 900px; margin-top: 24px; }
-.habits__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 40px; margin-top: clamp(48px, 6vw, 88px); }
-.habit { border-top: 1px solid rgba(var(--paper-rgb), .4); padding-top: 20px; }
-.habit span { font: 300 22px var(--f-body); color: var(--m1i); }
-.habit h3 { margin: 14px 0 10px; font: 400 26px/1.2 var(--f-display); }
-.habit p { font: 400 16px/1.6 var(--f-body); color: var(--m2i); }
 .tl-sec { padding-top: clamp(80px, 11vw, 150px); padding-bottom: clamp(80px, 11vw, 150px); display: flex; flex-wrap: wrap; gap: 40px clamp(40px, 8vw, 140px); }
 .tl-side { flex: 1 1 280px; max-width: 380px; }
 .tl-side > div { position: sticky; top: 120px; }
@@ -54,7 +47,13 @@
 .rows.tl__wins .row-t { font-size: 20px; }
 .tl__case { align-self: flex-start; margin-top: 2px; font: 500 13px/1.4 var(--f-body); letter-spacing: .04em; }
 .tl__stack { margin-top: 10px; font: 400 13px/1.6 var(--f-body); color: var(--m1); }
-.study { border-top: 1px solid rgba(var(--ink-rgb), .2); }
+.study { background: var(--ink); color: var(--paper); }
+.study .eyebrow { color: var(--m1i); }
+.study .rows { border-top-color: var(--paper); }
+.study .rows li { border-bottom-color: rgba(var(--paper-rgb), .2); }
+.study .rows .row-n, .study .rows .empty { color: var(--m2i); }
+.study .rows .badge { border-color: var(--paper); }
+.study .ph-chip { border-color: rgba(var(--paper-rgb), .45); }
 .study__in { padding-top: clamp(80px, 10vw, 140px); padding-bottom: clamp(80px, 10vw, 140px); }
 .study__in .eyebrow { display: block; margin-bottom: 24px; }
 .study__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 56px clamp(40px, 6vw, 96px); margin-top: clamp(48px, 6vw, 80px); }
@@ -68,7 +67,7 @@
 .rows .badge { font: 500 11px/1 var(--f-body); letter-spacing: .12em; text-transform: uppercase; border: 1px solid var(--ink); padding: 6px 10px; }
 .rows .badge--next { border-style: dashed; }
 .rows .empty { font: 400 13px/1.6 var(--f-body); color: var(--m1); }
-.skills { padding-bottom: clamp(100px, 12vw, 170px); }
+.skills { padding-top: clamp(80px, 10vw, 140px); padding-bottom: clamp(100px, 12vw, 170px); }
 .skills__head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; padding-bottom: 28px; border-bottom: 1px solid var(--ink); }
 .skills__head p { font: 400 15px/1.6 var(--f-body); color: var(--m2); max-width: 360px; }
 .skills__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }

@@ -30,7 +30,7 @@
         },
         {
           "titulo": "Sistema de crédito consignado",
-          "texto": "Operação mais rápida e com menos erros manuais, permitindo crescer em volume sem aumentar o time."
+          "texto": "Consulta de margem e geração de proposta em vários bancos num só fluxo: operação mais rápida e com menos erros manuais."
         },
         {
           "titulo": "Robôs e integrações",
@@ -106,8 +106,8 @@
         "Next.js",
         "Node.js",
         "React Native",
-        "ESP32",
-        "Bluetooth Low Energy"
+        "Docker",
+        "PostgreSQL"
       ]
     }
   ],
