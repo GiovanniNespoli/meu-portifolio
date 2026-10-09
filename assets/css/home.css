@@ -14,10 +14,12 @@
 @media (prefers-reduced-motion: no-preference) { .t-code { animation: code-drift 24s ease-in-out infinite alternate; } }
 @keyframes code-drift { from { translate: 0 -4px; } to { translate: 0 4px; } }
 .t-nespoli { font-family: var(--f-script); font-size: 235px; fill: var(--ink); stroke: var(--paper); stroke-width: 11; paint-order: stroke; stroke-linejoin: round; }
-.lead-kicker { font: 500 12px/1.5 var(--f-body); letter-spacing: .16em; text-transform: uppercase; border-top: 1px solid var(--ink); padding-top: 14px; }
-.lead-title { font: 500 clamp(22px, 1.8vw, 27px)/1.1 var(--f-display); text-transform: uppercase; }
+.lead-kicker { font: 700 clamp(24px, 2.2vw, 32px)/1.15 var(--f-body); letter-spacing: .06em; text-transform: uppercase; border-top: 1px solid var(--ink); padding-top: 14px; }
+.lead-kicker__sub { font-size: .6em; font-weight: 300; letter-spacing: .16em; margin-top: 4px; }
+.lead-kicker__main:not(.is-typing) .text-type__cursor { visibility: hidden; }
 .lead-text { font: 400 14px/1.55 var(--f-body); color: var(--m2); text-wrap: pretty; }
-.ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+.ctas { display: grid; grid-template-columns: max-content; gap: 10px; }
+.ctas .btn { justify-content: center; }
 /* hover dos cards: cresce 3,5% como as imagens da galeria; usa `scale` (e não transform) para não brigar com o reveal */
 .hl-card { display: block; background: var(--ink); color: var(--paper); text-decoration: none; padding: 22px 26px 20px; border: 1px solid var(--ink); transition: scale .3s var(--ease); }
 .hl-card:hover { color: var(--paper); scale: 1.035; }
@@ -55,7 +57,6 @@
 .scene__sig { position: absolute; left: 50%; bottom: 3%; width: 40%; transform: translateX(-50%); transform-origin: 50% 100%; z-index: 4; pointer-events: none; }
 .scene__sig svg { width: 100%; height: auto; display: block; overflow: visible; }
 .scene__lead { position: absolute; left: 0; bottom: calc(6% + 40px); width: min(29%, 380px); display: flex; flex-direction: column; gap: 14px; z-index: 5; }
-.scene__lead .lead-title span.light { display: block; }
 .scene__col { position: absolute; left: 36%; bottom: calc(6% + 40px); width: 31%; display: flex; flex-direction: column; gap: clamp(28px, 5vh, 56px); z-index: 5; }
 .scene__c1 { transform-origin: 0 0; }
 .scene__c1 .hl-card { outline: 1px solid var(--ink); outline-offset: 5px; }
@@ -74,7 +75,7 @@
 .flow__sig svg { width: 100%; height: auto; display: block; overflow: visible; }
 .flow__cols { display: flex; flex-wrap: wrap; gap: 40px 64px; margin-top: 64px; align-items: flex-start; }
 .flow__lead { flex: 1 1 340px; display: flex; flex-direction: column; gap: 18px; max-width: 560px; }
-.flow__lead .lead-title { font-size: clamp(28px, 6vw, 40px); line-height: 1.08; }
+.flow__lead .lead-kicker { font-size: clamp(26px, 6vw, 40px); }
 .flow__lead .lead-text { font-size: 16px; line-height: 1.6; }
 .flow__cards { flex: 1 1 300px; display: flex; flex-direction: column; gap: 12px; max-width: 480px; }
 .flow__cards .hl-card { padding: 24px; }
@@ -87,7 +88,6 @@
 .emp h2 { font: 500 clamp(28px, 3.2vw, 44px)/1.05 var(--f-display); text-transform: uppercase; }
 .mqw { overflow: hidden; margin-top: clamp(24px, 3vw, 40px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .mq { display: flex; width: max-content; align-items: center; animation: mq 38s linear infinite; }
-.mqw:hover .mq, .mqw:focus-within .mq { animation-play-state: paused; }
 .mq__item { flex: none; width: clamp(180px, 18vw, 260px); aspect-ratio: 2/1; margin: 0 clamp(8px, 1.5vw, 24px); display: flex; align-items: center; justify-content: center; }
 .mq__item img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
 /* modo escuro (desativado): :root[data-theme="dark"] .mq__item img { mix-blend-mode: screen; filter: grayscale(1) invert(1); } */
