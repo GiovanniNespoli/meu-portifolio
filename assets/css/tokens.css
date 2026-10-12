@@ -1,7 +1,7 @@
 :root {
   --ink: #371931; --paper: #FFF3E5;
   --ink-rgb: 55,25,49; --paper-rgb: 255,243,229;
-  --m1: #6E4F66; --m2: #5A3D53; --m1i: #D8C3BC; --m2i: #EADBD3; --tile: #EFE0D0;
+  --m1: #6E4F66; --m2: #5A3D53; --m1i: #D8C3BC; --m2i: #EADBD3; --tile: #EFE0D0; --tape: #F2C230;
   --ease: cubic-bezier(.22,.61,.36,1); --ease-io: cubic-bezier(.76,0,.24,1);
   --gutter: clamp(20px, 4vw, 56px); --max: 1440px; --nav-h: 75px;
   --f-body: 'Outfit', sans-serif; --f-display: 'Oswald', sans-serif;

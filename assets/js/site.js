@@ -170,6 +170,9 @@
         await PF.data;   // páginas que montam conteúdo a partir do JSON já renderizaram (a âncora #... fica no lugar certo)
         const hash = new URL(url, location.href).hash;
         if (hash) { const t = document.getElementById(decodeURIComponent(hash.slice(1))); if (t) t.scrollIntoView({ behavior: 'instant' }); }
+        // Voltar: o scrollTo lá de cima rodou com a página ainda vazia (a galeria só é desenhada depois do JSON) e foi
+        // limitado ao tamanho curto dela; com o conteúdo já montado, a posição de antes volta a existir
+        else if (y) scrollTo({ top: y, behavior: 'instant' });
         focusMain();
         if (curtain) await uncover();
       } catch (err) {
@@ -248,10 +251,25 @@
       if (!src) return empty();
       const img = new Image();
       img.alt = el.dataset.alt || '';
+      img.decoding = 'async';
       img.onload = () => { el.classList.remove('is-empty'); el.innerHTML = ''; el.appendChild(img); };
       img.onerror = empty;
       img.src = src;
     });
+  }
+
+  /* ---------- Imagem de projeto direto no HTML ----------
+     initSlots só insere o <img> depois que ele carrega, então a caixa fica vazia no meio da rolagem; aqui o <img>
+     já nasce no markup. data-init="1" tira o slot do initSlots (ele trata como vazio todo .img-slot sem data-src).
+     Sem o arquivo, onerror troca pelo mesmo placeholder tracejado de initSlots. */
+  function img(src, { alt = '', label = 'Imagem a definir' } = {}) {
+    return `<div class="img-slot" data-init="1"><img src="${esc(src)}" alt="${esc(alt)}" data-src="${esc(src)}" data-label="${esc(label)}" decoding="async" loading="eager" onerror="PF.missing(this)"></div>`;
+  }
+  function missing(im) {
+    const el = im.closest('.img-slot');
+    if (!el) return;
+    el.classList.add('is-empty');
+    el.innerHTML = `<span>${esc(im.dataset.label || 'Imagem a definir')}<br><small>${esc(im.dataset.src || '')}</small></span>`;
   }
 
   /* ---------- Reveal ---------- */
@@ -298,26 +316,14 @@
     targets.forEach((els, tgt) => { if (!tgt.isConnected) { if (io) io.unobserve(tgt); targets.delete(tgt); } });
   }
 
-  /* ---------- Crop on scroll ([data-crop]) ---------- */
-  function setupCrop() {
-    if (reduce) return;
-    let raf = 0;
-    const run = () => {
-      raf = 0;
-      if (innerWidth < 720) return;
-      const vh = innerHeight;
-      $$('[data-crop]').forEach(el => {
-        const r = el.getBoundingClientRect();
-        const t = Math.max(0, Math.min(1, (vh - r.top) / (vh * .85)));
-        const c = ((1 - t) * (+el.dataset.crop || 8)).toFixed(2);
-        el.style.clipPath = `inset(${c}% ${c}% ${c}% ${c}%)`;
-      });
-    };
-    addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true, signal: pageCtl.signal });
-    run();
+  /* ---------- Faixa de bloqueio (projetos confidenciais / em andamento) ----------
+     O texto é repetido duas vezes para o marquee (translateX -50%) fechar o loop sem emenda. */
+  function tape(text, cls = '') {
+    const run = Array(10).fill(`<span>${esc(text)}</span><i>✕</i>`).join('');
+    return `<div class="tape ${cls}" aria-hidden="true"><div class="tape__track">${run}${run}</div></div>`;
   }
 
-  window.PF = { scanReveal, initSlots, esc, setupCrop, reduce, isDark,
+  window.PF = { scanReveal, initSlots, img, missing, esc, reduce, isDark, tape,
     get signal() { return pageCtl.signal; },
     data: fetch('data/portfolio-data.json', { cache: 'no-cache' }).then(r => r.json()).catch(() => ({})) };
 

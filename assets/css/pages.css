@@ -102,6 +102,28 @@
 .gal__hl { font: 400 32px/1.1 var(--f-display); letter-spacing: -.01em; }
 .gal__res { font: 400 16px/1.65 var(--f-body); color: var(--m2); text-wrap: pretty; }
 .gal__stack { font: 400 13px/1.7 var(--f-body); color: var(--m1); }
+.gal__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+/* selo de status: amarelo da faixa com um pedaço listrado na frente */
+.tag--tape { display: inline-flex; align-items: center; gap: 8px; background: var(--tape); color: var(--ink); }
+.tag--tape::before { content: ""; width: 14px; height: 10px; background: repeating-linear-gradient(-45deg, var(--ink) 0 2px, transparent 2px 5px); }
+/* grade compacta: projetos fora dos destaques */
+.pj-more { border-top: 1px solid var(--ink); padding-top: clamp(28px, 3vw, 40px); }
+.pj-more__head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: clamp(28px, 3vw, 40px); }
+.pj-more__head h2 { font: 500 clamp(32px, 3.4vw, 52px)/1 var(--f-display); text-transform: uppercase; }
+.pj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: clamp(48px, 5vw, 72px) clamp(24px, 2.4vw, 36px); }
+.pj-card { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: var(--ink); }
+.pj-card:hover { color: var(--ink); }
+.pj-card__box { aspect-ratio: 3/2; position: relative; overflow: hidden; background: var(--tile); margin-bottom: 8px; }
+.pj-card__box .zoom { position: absolute; inset: 0; transition: transform .3s var(--ease); }
+.pj-card:hover .zoom { transform: scale(1.035); }
+.pj-card__top { display: flex; flex-direction: column; gap: 10px; font: 500 11px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: var(--m1); }
+.pj-card__top .tag { padding: 5px 8px; }
+.pj-card__t { margin-top: 4px; font: 500 clamp(26px, 2.2vw, 34px)/1.05 var(--f-display); text-transform: uppercase; }
+.pj-card__cli { font: 300 17px/1.35 var(--f-body); color: var(--m2); }
+.pj-card__res { font: 400 15px/1.6 var(--f-body); color: var(--m2); text-wrap: pretty; }
+.pj-card .proj__more { margin-top: 6px; }
+.pj-card:hover .proj__more span { transform: translateX(6px); }
+.pj-card .tape__track span { font-size: 18px; }
 
 /* ---------- Estudo de caso ---------- */
 .case-head { padding-top: clamp(28px, 5vw, 64px); }
@@ -116,6 +138,7 @@
 .facts dd { margin: 8px 0 0; font: 400 16px/1.5 var(--f-body); }
 .case-hero { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(40px, 5vw, 72px); }
 .case-hero__box { aspect-ratio: 16/8; position: relative; overflow: hidden; background: var(--tile); }
+.case-hero__box .img-slot img { object-position: var(--pos, 50% 50%); }
 .case-body { padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(80px, 10vw, 140px); display: flex; flex-direction: column; }
 .blk { display: flex; flex-wrap: wrap; gap: 16px clamp(40px, 8vw, 140px); padding: clamp(36px, 4vw, 56px) 0; border-top: 1px solid rgba(var(--ink-rgb), .2); }
 .blk__h { flex: 0 1 300px; display: flex; gap: 16px; align-items: baseline; }
@@ -128,7 +151,15 @@
 .blk__b li span:first-child { font: 300 18px var(--f-body); color: var(--m1); }
 .blk--media .blk__h { margin-bottom: 12px; flex-basis: 100%; }
 .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(16px, 2vw, 28px); width: 100%; }
-.media-grid > div { aspect-ratio: 4/3; position: relative; overflow: hidden; background: var(--tile); }
+.media-grid figure { margin: 0; }
+.media-grid__box { aspect-ratio: 4/3; position: relative; overflow: hidden; background: var(--tile); }
+.media-grid figcaption { margin-top: 10px; font: 400 13px/1.5 var(--f-body); color: var(--m1); letter-spacing: .02em; }
+.case-lock { width: 100%; max-width: 720px; padding: 18px 20px; border: 1px dashed rgba(var(--ink-rgb), .45); font: 400 16px/1.6 var(--f-body); color: var(--m2); }
+/* Lista sob sigilo (projetos[].sigilo): linhas de enchimento desfocadas sob duas faixas em X (as pontas são cortadas) */
+.sigilo { position: relative; overflow: hidden; }
+.sigilo ol { filter: blur(6px); user-select: none; }
+@media (max-width: 599px) { .sigilo .tape--a { transform: translateY(-50%) rotate(-12deg); } .sigilo .tape--b { transform: translateY(-50%) rotate(12deg); } }
+.facts .tag--tape { margin-left: 8px; padding: 4px 8px; font: 500 11px/1 var(--f-body); letter-spacing: .12em; text-transform: uppercase; vertical-align: 2px; }
 .case-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; width: 100%; }
 .case-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1px solid var(--ink); text-decoration: none; font: 500 14px var(--f-body); }
 .case-links .ph-chip { padding: 10px 14px; color: var(--m1); }
@@ -145,3 +176,19 @@
 .gal__body .proj__more { margin-top: 12px; }
 .proj__more { display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; min-height: 44px; font: 500 15px var(--f-body); text-decoration: none; border-bottom: 1px solid var(--ink); }
 .proj__more span { display: inline-block; transition: transform .25s var(--ease); }
+
+/* ---------- Entrada das imagens ligada à rolagem (só CSS) ----------
+   Sem JS e sem IntersectionObserver: o progresso da máscara acompanha a posição da caixa na tela (view timeline),
+   então a imagem está inteira quando ~60% dela entrou, e rolar para trás fecha de novo. A imagem é visível por
+   padrão: sem suporte a animation-timeline, ou com movimento reduzido, nada é escondido. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes wipe-l { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+    @keyframes wipe-r { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0); } }
+    @keyframes card-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    /* animation-timeline e animation-range vêm depois do shorthand, que os redefine */
+    .gal__box, .case-hero__box, .media-grid__box { animation: wipe-l linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    .gal__item.rev .gal__box, .media-grid figure:nth-child(even) .media-grid__box { animation-name: wipe-r; }
+    .pj-card { animation: card-in linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+  }
+}
