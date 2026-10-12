@@ -224,76 +224,365 @@
     {
       "slug": "automacao-financeira",
       "tipo": "Profissional",
+      "status": "confidencial",
+      "destaque_galeria": true,
       "titulo": "Automação financeira",
       "cliente": "PH Negócios",
-      "destaque": "2 horas → 5 minutos",
-      "resumo": "Um processo financeiro que levava cerca de duas horas passou a ser executado em cinco minutos.",
-      "contribuicao": "Desenvolvimento da solução a partir do mapeamento feito com o time de projetos.",
-      "contexto": "Um processo financeiro interno levava cerca de duas horas para ser executado. [Detalhe o contexto sem expor dados internos.]",
-      "papel": "O mapeamento do processo foi feito em conjunto com o time de projetos. A partir dele, fui responsável pelo desenvolvimento da solução.",
-      "solucao": "Uma solução que automatiza a execução do processo mapeado. [Descreva a solução em linhas gerais.]",
+      "destaque": "1 dia → 5 minutos",
+      "resumo": "Automação da rotina do time financeiro: processos que levavam um dia e rotinas diárias de duas horas passaram a ser executados em cinco minutos, com um robô, uma API e um painel web de acompanhamento.",
+      "contribuicao": "Desenvolvimento da solução de ponta a ponta (robô, API e painel web) a partir do mapeamento feito com o time de projetos.",
+      "periodo": "jul–out 2026",
+      "contexto": "O time financeiro fazia os cálculos do dia a dia em muitas planilhas e, para cada um, precisava buscar informações em vários lugares do sistema. Era muito trabalho manual e repetitivo, que não precisava existir. O sistema nasceu para facilitar essa rotina.",
+      "papel": "O mapeamento do processo foi feito em conjunto com o time de projetos. A partir dele, fui responsável pelo desenvolvimento da solução: o robô, a API e o painel web.",
+      "solucao": "Três peças trabalhando juntas. Um robô executa a rotina na plataforma, uma API controla as execuções e guarda o histórico, e um painel web permite à equipe acionar os fluxos, acompanhar o andamento ao vivo e consultar relatórios. Cada execução deixa um registro para auditoria.",
+      "sigilo": {
+        "funcionalidades": 9
+      },
       "decisoes": [
         "Mapear o processo com o time de projetos antes de definir a solução.",
-        "[Adicione decisões técnicas relevantes.]"
-      ],
-      "stack": [],
-      "resultado": "A execução passou de cerca de duas horas para cinco minutos.",
-      "links": []
-    },
-    {
-      "slug": "admtf",
-      "tipo": "Pessoal",
-      "titulo": "ADMTF",
-      "cliente": "Sistema de gestão para AD Missão Torre Forte",
-      "destaque": "",
-      "resumo": "Sistema de gestão com módulos de membros, igrejas, visitantes, departamentos e carteirinhas.",
-      "contribuicao": "Concepção e desenvolvimento do sistema, com autenticação e permissões.",
-      "contexto": "A administração da AD Missão Torre Forte precisava organizar informações de membros, igrejas, visitantes e departamentos em um só lugar.",
-      "papel": "Projeto pessoal: concepção, desenvolvimento frontend e backend e modelagem de dados.",
-      "solucao": "Um sistema web dividido em módulos — membros, igrejas, visitantes, departamentos e carteirinhas — com autenticação e controle de permissões.",
-      "decisoes": [
-        "Organização por módulos, alinhada às rotinas administrativas de cada área.",
-        "Autenticação e permissões para controlar o acesso a cada módulo.",
-        "Prisma sobre PostgreSQL para manter a modelagem de dados explícita e tipada."
+        "Separar o robô, a API e o painel: quem executa, quem controla e quem mostra evoluem de forma independente.",
+        "Trava para impedir execuções simultâneas, proteção contra pagamento duplicado e retomada segura depois de falhas.",
+        "Eventos ao vivo para o painel mostrar o andamento sem recarregar a página.",
+        "Segredos mantidos no servidor do painel, fora do navegador.",
+        "Especificações escritas antes do código, versionamento semântico e changelog para acompanhar a evolução."
       ],
       "stack": [
+        "Python",
+        "Playwright",
+        "FastAPI",
+        "MongoDB",
         "Next.js",
         "React",
         "TypeScript",
-        "Node.js",
-        "Express",
-        "Prisma",
+        "shadcn/ui"
+      ],
+      "resultado": "O dia a dia do time financeiro ficou muito mais leve: a busca de informações em vários lugares do sistema e os cálculos nas planilhas passaram a ser feitos de forma automática, e a equipe acompanha tudo por um painel. O ganho de tempo foi enorme. Processos que levavam um dia inteiro passaram a ser concluídos em cinco minutos, e rotinas diárias de duas horas também caíram para cinco minutos.",
+      "links": [],
+      "sem_midia": true
+    },
+    {
+      "slug": "admtf",
+      "tipo": "Profissional",
+      "status": "em-andamento",
+      "destaque_galeria": true,
+      "titulo": "Sistema de gestão da igreja",
+      "cliente": "AD Missão Torre Forte (trabalho voluntário)",
+      "destaque": "Em construção",
+      "resumo": "Sistema para centralizar a gestão da igreja em um só lugar: igrejas, departamentos, membros, permissões por área e módulos como financeiro, escala dos cultos, estudos e acompanhamento de visitantes.",
+      "contribuicao": "Desenvolvimento de ponta a ponta: levantamento com a liderança, modelagem de dados, back-end, front-end, permissões e publicação.",
+      "periodo": "ago/2026 – em andamento",
+      "contexto": "A gestão da igreja estava espalhada: informações de membros, departamentos, escalas e finanças ficavam em lugares diferentes, e cada líder dependia de outras pessoas para saber o que acontecia na sua área. O objetivo é reunir tudo em um só sistema, com cada departamento enxergando e cuidando apenas do que é seu.",
+      "papel": "Trabalho voluntário para a igreja, feito sozinho de ponta a ponta: levantamento das necessidades com a liderança, modelagem de dados, back-end, front-end, regras de permissão e publicação.",
+      "solucao": "Uma aplicação web em Laravel, Inertia e Vue, em um único projeto. A base reúne igrejas, departamentos e usuários, com permissões definidas pelo vínculo de cada pessoa com o departamento. Sobre essa base, o sistema cresce por módulos que cada departamento ativa conforme a necessidade.",
+      "funcionalidades": [
+        "Várias igrejas no mesmo sistema, cada uma com acesso apenas aos seus dados",
+        "Departamentos com gestão própria, cada um com as suas regras",
+        "Usuários com permissões por departamento: ver, editar, criar e excluir",
+        "Documentos dos membros, organizados por tipo",
+        "Módulo financeiro da igreja e de cada departamento",
+        "Escala dos cultos envolvendo todos os departamentos",
+        "Módulo de estudos",
+        "Controle de visitantes, para a equipe entrar em contato e acompanhar o retorno",
+        "Módulos ativados por departamento, conforme a necessidade"
+      ],
+      "decisoes": [
+        "Front-end e back-end no mesmo projeto com Laravel e Inertia: menos peças para manter e publicar, sem uma API separada só para a interface.",
+        "Permissões pelo vínculo entre usuário e departamento, no estilo chmod (ver, editar, criar e excluir), com as regras centralizadas em Policies no servidor.",
+        "Sistema organizado em módulos, para cada departamento usar só o que precisa e para novos módulos entrarem sem mexer na base."
+      ],
+      "stack": [
+        "Laravel",
+        "Inertia",
+        "Vue 3",
+        "TypeScript",
+        "Tailwind CSS",
         "PostgreSQL"
       ],
-      "resultado": "[Descreva o resultado ou o aprendizado, sem números não verificados.]",
+      "resultado": "A base do sistema está pronta: login, igrejas, departamentos, usuários, permissões e documentos. Os próximos passos são os módulos de financeiro, escala dos cultos, estudos e acompanhamento de visitantes.",
+      "imagens": [
+        {
+          "arquivo": "capa-admtf.webp",
+          "legenda": "Tela de login da v2, em desenvolvimento, com o design system neumorphism e a identidade da igreja."
+        }
+      ],
       "links": []
     },
     {
       "slug": "ttt",
       "tipo": "Pessoal",
-      "titulo": "TTT — Take the Time",
+      "destaque_galeria": true,
+      "titulo": "Take the Time",
       "cliente": "Controle de horas e jornada",
-      "destaque": "",
-      "resumo": "Controle de horas com registros de jornada, banco de horas, filtros e calendário.",
-      "contribuicao": "Interface, regras de cálculo e modelagem de dados.",
-      "contexto": "Registrar a jornada e acompanhar o banco de horas exige regras de cálculo claras e uma interface que não esconda a informação.",
-      "papel": "Projeto pessoal: design da interface, desenvolvimento e definição das regras de cálculo.",
-      "solucao": "Uma aplicação para registrar jornadas, consultar o banco de horas e navegar pelos registros com filtros e calendário.",
+      "destaque": "Controle de jornada e banco de horas, de um jeito simples",
+      "resumo": "Sistema de ponto multiusuário com relatórios e saldo de horas por dia, semana e mês.",
+      "contribuicao": "Projeto completo: especificação, design system, front-end e API.",
+      "periodo": "Maio a junho de 2026",
+      "contexto": "Quem tem banco de horas precisa saber, sem fazer conta, quanto trabalhou e se está com saldo positivo ou negativo. Projetei um sistema de ponto multiusuário com cadastro, login, relatórios e configurações.",
+      "papel": "Desenvolvi o projeto sozinho: especificação das telas, design system, arquitetura do front-end, API e banco de dados.",
+      "solucao": "Aplicação web com API em Node.js (Express + Prisma, PostgreSQL) que cuida de cadastro, login, registro de ponto e cálculo do saldo. O painel mostra indicadores e um calendário com o saldo de cada dia (verde, vermelho ou cinza sem apontamento), em tema claro e escuro.",
+      "funcionalidades": [
+        "Cadastro e login de usuários",
+        "Registro de ponto (bater ponto)",
+        "Banco de horas total",
+        "Horas positivas e negativas por dia",
+        "Horas positivas e negativas por semana",
+        "Horas positivas e negativas por mês",
+        "Média de horas trabalhadas",
+        "Relatórios de horas",
+        "Calendário mensal com saldo de cada dia",
+        "Configurações e tema claro/escuro"
+      ],
       "decisoes": [
-        "Regras de cálculo do banco de horas organizadas separadamente da interface.",
-        "Calendário e filtros como forma principal de consulta aos registros.",
-        "Componentes shadcn/ui com Tailwind para uma interface consistente e clara."
+        "Vue 3 com TypeScript estrito (sem any): código mais seguro e fácil de manter.",
+        "Rotas geradas a partir das pastas de telas: menos configuração manual.",
+        "Pinia Colada para dados do servidor e Pinia só para estado de tela: separa cache de dados do estado de interface.",
+        "Uma única instância Axios e chamadas só via services: autenticação e erros tratados em um lugar.",
+        "Formulários com VeeValidate + Zod: validação tipada e reaproveitável.",
+        "Design system por tokens de cor, claro e escuro: trocar tema e ajustar contraste sem mexer em cada tela.",
+        "Specs escritas antes de cada tela: escopo claro antes de codar."
       ],
       "stack": [
-        "Next.js",
-        "React",
+        "Vue 3",
         "TypeScript",
+        "Vite",
+        "Vue Router",
+        "Pinia",
+        "Pinia Colada",
+        "Axios",
+        "Tailwind CSS",
+        "shadcn-vue",
+        "Reka UI",
+        "TanStack Table",
+        "VeeValidate",
+        "Zod",
+        "dayjs",
+        "Node.js",
+        "Express",
         "Prisma",
         "PostgreSQL",
-        "Tailwind",
-        "shadcn/ui"
+        "pnpm"
       ],
-      "resultado": "[Descreva o resultado ou o aprendizado.]",
+      "resultado": "Aplicação pessoal concluída e em uso: registro de ponto, relatórios e saldo de horas por dia, semana e mês, com tema claro e escuro e código organizado para evoluir.",
+      "capa_posicao": "50% 0%",
+      "imagens": [
+        {
+          "arquivo": "capa-ttt.webp",
+          "legenda": "Calendário do mês com o saldo de cada dia, os indicadores de horas trabalhadas e de banco de horas e o botão de registrar ponto."
+        }
+      ],
+      "links": []
+    },
+    {
+      "slug": "rag",
+      "tipo": "Profissional",
+      "destaque_galeria": true,
+      "titulo": "Base de conhecimento RAG para agentes via MCP",
+      "cliente": "PH Negócios",
+      "destaque": "Documentação da empresa consultável por agentes de IA, com busca semântica e acesso protegido.",
+      "resumo": "Sistema RAG que indexa documentos e os expõe a agentes por um servidor MCP com busca semântica.",
+      "contribuicao": "Projeto e desenvolvimento completos, de ponta a ponta.",
+      "periodo": "set 2026",
+      "contexto": "As regras e a documentação da empresa ficavam em PDFs e textos soltos. Agentes de IA não tinham como consultá-las, então respondiam sem contexto ou exigiam colar o conteúdo a cada conversa. Era preciso uma base única, fácil de atualizar e consultável por qualquer agente.",
+      "papel": "Projetei e desenvolvi o sistema de ponta a ponta: pipeline de indexação, busca semântica, servidor MCP com autenticação, interface de gestão dos documentos e a documentação de deploy.",
+      "solucao": "Um sistema RAG em que os documentos (PDF, Markdown e texto) são enviados por uma interface web, divididos em trechos, transformados em vetores e guardados em um banco vetorial. Um servidor MCP expõe a busca semântica como ferramenta, para que qualquer agente encontre os trechos relevantes e a fonte de cada um. Roda local ou em servidor, com acesso protegido por token.",
+      "funcionalidades": [
+        "Envio de vários documentos de uma vez (PDF, Markdown, texto)",
+        "Indexação automática com divisão em trechos com sobreposição",
+        "Reenvio substitui o documento, sem duplicar",
+        "Listagem com a quantidade de trechos de cada documento",
+        "Remoção de documentos",
+        "Busca semântica com fonte e pontuação de relevância",
+        "Ferramenta MCP de busca",
+        "Ferramenta MCP que lista os documentos",
+        "Modo local (stdio) e modo remoto (HTTP)",
+        "Autenticação por token no modo remoto"
+      ],
+      "decisoes": [
+        "Embeddings locais (sentence-transformers): sem custo por consulta e sem enviar documentos a terceiros.",
+        "Pipeline em etapas separadas (carregar, dividir, vetorizar, guardar): cada parte pode ser trocada sem mexer nas outras.",
+        "Divisão por palavras com sobreposição: não corta palavras e preserva contexto entre trechos.",
+        "Chroma embutido por padrão, com troca para servidor remoto só por configuração: simples hoje, escalável depois.",
+        "MCP como interface: qualquer agente compatível usa a base sem integração específica.",
+        "Token no modo HTTP, com recusa de iniciar sem ele: evita expor a base por engano.",
+        "Reenvio substitui o documento: a base não acumula versões duplicadas."
+      ],
+      "stack": [
+        "Python",
+        "ChromaDB",
+        "sentence-transformers (all-MiniLM-L6-v2)",
+        "FastMCP",
+        "Streamlit",
+        "pypdf",
+        "python-dotenv"
+      ],
+      "resultado": "Projeto concluído: agentes consultam a documentação por busca semântica, com a fonte de cada trecho, e a base é atualizada pela interface web sem mexer em código.",
+      "imagens": [
+        {
+          "arquivo": "capa-rag.webp",
+          "legenda": "Interface de gestão: envio de documentos e lista dos documentos indexados, com documentos fictícios de demonstração."
+        }
+      ],
+      "links": []
+    },
+    {
+      "slug": "backoffice-consignado",
+      "tipo": "Profissional",
+      "status": "confidencial",
+      "titulo": "Sistema de vendas de crédito consignado",
+      "cliente": "PH Negócios",
+      "destaque": "Promotoras e bancos vendendo consignado em um só lugar",
+      "resumo": "Sistema web para promotoras e bancos venderem crédito consignado, da simulação à análise da proposta, com servidor MCP para operar a API pelo chat.",
+      "contribuicao": "Desenvolvimento front-end",
+      "periodo": "set/2026 – out/2026",
+      "contexto": "Promotoras e bancos que vendem crédito consignado lidam com muitas etapas: cadastrar convênios, produtos e tabelas, simular ofertas para o cliente, acompanhar a proposta até a averbação e revisar as que travam por pendência ou reprovação. Isso costuma ficar espalhado em planilhas e sistemas separados. O projeto reúne esse fluxo em um back-office único, com um servidor MCP para consultar e gerenciar os dados pelo chat.",
+      "papel": "Desenvolvi o front-end em Vue: telas, componentes reutilizáveis e integração com a API, além do servidor MCP, junto de outros desenvolvedores do time.",
+      "solucao": "Um front-end em Vue 3 com telas de cadastro, simulação de ofertas em passos, esteira e detalhe da proposta, painel por hierarquia e mesa operacional para revisar propostas barradas. As telas seguem um mesmo padrão de componentes, formulários e integração com a API. Um servidor MCP separado expõe a API como ferramentas, para consultar e gerenciar cadastros direto pelo chat.",
+      "sigilo": {
+        "funcionalidades": 10,
+        "decisoes": 6
+      },
+      "stack": [
+        "Vue 3",
+        "TypeScript",
+        "Vite",
+        "Tailwind CSS",
+        "shadcn-vue (Reka UI)",
+        "Pinia",
+        "Vue Router",
+        "Zod",
+        "Node.js",
+        "Model Context Protocol (MCP)"
+      ],
+      "links": [],
+      "resultado": "O front cobre os cadastros, a simulação, a esteira e a mesa operacional. Os cadastros já operam contra a API real e o servidor MCP cobre mais de 30 cadastros. Propostas, painel inicial e mesa operacional ainda usam dados simulados, aguardando a API. Ainda sem testes automatizados nem métricas de uso."
+    },
+    {
+      "slug": "app-mobile",
+      "tipo": "Profissional",
+      "status": "confidencial",
+      "titulo": "App mobile de crédito consignado",
+      "cliente": "PH Negócios",
+      "destaque": "Simule, contrate e acompanhe seu crédito no app",
+      "resumo": "Nova interface e jornadas do aplicativo mobile de crédito consignado, para iOS e Android.",
+      "contribuicao": "Desenvolvimento mobile",
+      "periodo": "ago/2026 – out/2026",
+      "contexto": "O aplicativo já funcionava com o backend, mas a interface era antiga e a jornada estava fragmentada, com etapas soltas para contratar e acompanhar a proposta. Foi redesenhado com nova interface e jornadas guiadas.",
+      "papel": "Eu atuei como desenvolvedor mobile. Implementei a nova interface a partir de uma referência visual existente e a adaptei às regras do aplicativo e à integração com o backend.",
+      "solucao": "Nova interface em React Native, com jornadas guiadas: acesso seguro, simulação de ofertas, criação da proposta e uma esteira que mostra cada etapa até a liberação do valor. O app conversa só com o backend próprio, que cuida dos parceiros de crédito.",
+      "sigilo": {
+        "funcionalidades": 9,
+        "decisoes": 4
+      },
+      "stack": [
+        "React Native",
+        "Expo",
+        "TypeScript",
+        "Expo Router",
+        "TanStack Query",
+        "Zustand",
+        "Reanimated"
+      ],
+      "links": [],
+      "resultado": "A nova interface cobre a jornada completa e está em testes em simulador e aparelho, ainda sem métricas de uso."
+    },
+    {
+      "slug": "nexo",
+      "tipo": "Profissional",
+      "titulo": "NEXO Rotulagem: landing page de orçamento",
+      "cliente": "NEXO Rotulagem, via TamanduaTI",
+      "destaque": "Orçamento guiado que abre o WhatsApp",
+      "resumo": "Landing page da NEXO, empresa de rótulos para embalagens, que leva o visitante a pedir orçamento: um formulário guiado monta a mensagem e abre o WhatsApp da empresa já preenchido.",
+      "contribuicao": "Implementação da página a partir do design: estrutura, responsividade, formulário de orçamento com validação, integração com o WhatsApp, rastreamento de eventos, imagens otimizadas e deploy em container.",
+      "periodo": "out 2026",
+      "contexto": "A NEXO precisava de uma presença on-line que transformasse visitas em pedidos de orçamento. Ainda não havia fotos dos trabalhos nem os textos finais de prazos, perguntas frequentes e contatos, então a página foi preparada para receber esses dados depois, com imagens conceituais identificadas como tal.",
+      "papel": "Desenvolvedor front-end e responsável pelo deploy, como freelancer pela TamanduaTI.",
+      "solucao": "Página única e estática, sem etapa de build, com CSS próprio e fontes servidas localmente. O formulário valida quantidade, tipo de frasco, tipo de rótulo, nome e WhatsApp, monta a mensagem com as respostas e abre o WhatsApp com o texto pronto. Cliques e envios vão para o dataLayer, com pontos já marcados para GA4 e Meta Pixel. O deploy é um container Nginx preparado para o Railway, com a porta definida por variável de ambiente.",
+      "funcionalidades": [
+        "Hero com título animado linha a linha, botões de orçamento e de WhatsApp e imagem própria para desktop e celular",
+        "Seção do produto final com rolagem fixa: o frasco diminui conforme a rolagem e duas frases se alternam pelo progresso",
+        "Seção de diferenciais da NEXO, com uma grade de trabalhos por segmento (alimentos, bebidas, limpeza e varejo)",
+        "Formulário de orçamento em três escolhas (quantidade, frasco e rótulo), mais nome, WhatsApp e e-mail, com mensagem de erro por campo",
+        "Ao enviar, gera a mensagem com as respostas, abre o WhatsApp da empresa e mostra a confirmação com o primeiro nome",
+        "Campo opcional de arte ou referência, com arrastar e soltar",
+        "Perguntas frequentes em acordeão acessível",
+        "Botão flutuante de WhatsApp e cabeçalho que ganha fundo desfocado na rolagem",
+        "Rastreamento de cliques por atributos, pronto para GA4 e Meta Pixel",
+        "Rolagem com inércia que preserva as seções fixas e respeita a preferência por menos movimento"
+      ],
+      "decisoes": [
+        "Site estático sem etapa de build: o runtime do design e as fontes ficam no repositório, sem CDN e sem Node no deploy.",
+        "Orçamento enviado pelo WhatsApp em vez de back-end, porque o canal de vendas da empresa é o WhatsApp; o ponto para um envio futuro a uma API ficou marcado no código.",
+        "Container nginx:stable-alpine com template limitado à variável de porta, endpoint de saúde para o healthcheck do Railway e HEALTHCHECK no Dockerfile.",
+        "Nginx devolve 404 para arquivo ausente, sem fallback para a página inicial, e usa cache com revalidação, porque os arquivos têm nome fixo e cada deploy precisa ser revalidado.",
+        "Imagens conceituais, identificadas como tais na página, até o cliente enviar fotos reais dos trabalhos.",
+        "Animações ligadas à rolagem por uma variável CSS calculada no scroll e revelações com IntersectionObserver, com alternativa para quem prefere menos movimento."
+      ],
+      "stack": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "React 18",
+        "Nginx",
+        "Docker",
+        "Railway"
+      ],
+      "resultado": "Página entregue, com formulário de orçamento integrado ao WhatsApp e rastreamento de cliques preparado para GA4 e Meta Pixel.",
+      "imagens": [
+        {
+          "arquivo": "capa-nexo.webp",
+          "legenda": "Tela inicial da landing page: título, botões de orçamento e de WhatsApp e imagem conceitual dos rótulos."
+        }
+      ],
+      "links": []
+    },
+    {
+      "slug": "tamanduati",
+      "tipo": "Pessoal",
+      "titulo": "Site institucional da TamanduaTI",
+      "cliente": "TamanduaTI, minha marca de projetos freelance",
+      "destaque": "WebGL e animações guiadas pela rolagem",
+      "resumo": "Site institucional da TamanduaTI, minha marca de desenvolvimento de software e otimização de processos, com hero em WebGL, animações guiadas pela rolagem, SEO completo e formulário de contato que grava no banco e avisa por e-mail.",
+      "contribuicao": "Concepção e desenvolvimento completos: identidade visual, front-end, formulário de contato com banco de dados e e-mail, e SEO.",
+      "periodo": "jul 2026",
+      "contexto": "A TamanduaTI precisava de uma página para se apresentar e levar visitantes ao contato. A regra do projeto foi tratar SEO e mobile como requisito de pronto, e não como ajuste posterior.",
+      "papel": "Projeto próprio: desenvolvimento de ponta a ponta, do visual ao back-end do formulário de contato.",
+      "solucao": "Site de uma página com App Router e Server Components. Os efeitos visuais (WebGL, GSAP e motion) ficam isolados em componentes client, e o conteúdo indexável é renderizado no servidor. Nome, URL, descrição, navegação e contato vêm de um arquivo de configuração único. O formulário de contato valida os dados com Zod, usa um campo-isca contra robôs, grava a mensagem no PostgreSQL e envia um e-mail de aviso, sem derrubar a requisição se o envio falhar.",
+      "funcionalidades": [
+        "Hero com raios de luz em WebGL que seguem o mouse, entrada animada do logo e título com brilho deslizante",
+        "Seção com o texto fixo na tela enquanto se rola: o foco muda de problemas para soluções",
+        "Seção de serviços (desenvolvimento, otimização de processos, gestão de projetos e consultoria), com cartões de borda animada",
+        "Menu lateral em tela cheia que desfoca e bloqueia o conteúdo ao abrir",
+        "SEO completo: metadados com Open Graph e Twitter Card, JSON-LD de serviços, sitemap e robots",
+        "Layout mobile-first, com tamanhos de fonte fluidos e sem rolagem horizontal",
+        "Formulário de contato com validação, campo-isca contra robôs, gravação no PostgreSQL e aviso por e-mail",
+        "Contador de visitas da página inicial",
+        "Página de política de privacidade"
+      ],
+      "decisoes": [
+        "Server Components por padrão e 'use client' só nos efeitos e na interação, para o conteúdo indexável não depender de JavaScript.",
+        "Rolagem controlada pelo progresso da seção (de 0 a 1), com os listeners de scroll limitados por requestAnimationFrame.",
+        "Fonte única de configuração para nome, URL, links e contato, reaproveitada nos metadados, no menu e no JSON-LD.",
+        "Tailwind v4 configurado só por CSS, sem arquivo de configuração.",
+        "Componentes de efeito visual de um registro de componentes, instalados pela CLI do shadcn e adaptados localmente.",
+        "Regras de SEO, mobile e animação por rolagem documentadas no repositório para orientar o desenvolvimento."
+      ],
+      "stack": [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS",
+        "GSAP",
+        "ogl (WebGL)",
+        "PostgreSQL",
+        "Resend"
+      ],
+      "resultado": "Site entregue com SEO completo (metadados, JSON-LD e sitemap) e layout mobile-first.",
+      "imagens": [
+        {
+          "arquivo": "capa-tamanduati.webp",
+          "legenda": "Tela inicial do site, com os raios de luz em WebGL, o logo da marca e o menu lateral."
+        }
+      ],
       "links": []
     }
   ]
