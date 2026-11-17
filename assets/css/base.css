@@ -7,6 +7,8 @@ body {
   transition: background-color .3s, color .3s;
 }
 h1, h2, h3, p, ul { margin: 0; padding: 0; }
+/* palavra que não cabe na linha quebra em vez de vazar a caixa ou ser cortada (títulos grandes, termos técnicos) */
+h1, h2, h3, p, li, dd { overflow-wrap: break-word; }
 ul { list-style: none; }
 a { color: var(--ink); }
 img { max-width: 100%; }

@@ -2,6 +2,9 @@
 .sec { max-width: var(--max); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 .page-bar { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font: 500 12px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: var(--m1); padding-bottom: 18px; border-bottom: 1px solid rgba(var(--ink-rgb), .2); }
 .h-xl { font: 500 clamp(56px, 10vw, 168px)/.92 var(--f-display); text-transform: uppercase; }
+/* Títulos grandes nunca passam da largura útil (cqi = % do container): a palavra mais longa hoje, "CONHECIMENTO",
+   mede 6,12 em. Sem suporte a cqi, a linha é ignorada e vale o clamp acima. */
+.h-xl { font-size: min(clamp(56px, 10vw, 168px), 15.5cqi); }
 .h-lg { font: 500 clamp(40px, 5vw, 72px)/1.02 var(--f-display); text-transform: uppercase; }
 .lbl { font: 500 11px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: var(--m1); }
 .dark-sec { background: var(--ink); color: var(--paper); }
@@ -9,11 +12,14 @@
 .ph-chip { border: 1px dashed rgba(var(--ink-rgb), .45); padding: 4px 9px; font: 400 13px var(--f-body); text-transform: none; letter-spacing: .02em; }
 
 /* ---------- Sobre ---------- */
-.about-open { padding-top: clamp(28px, 5vw, 64px); padding-bottom: 0; }
+.about-open { padding-top: clamp(28px, 5vw, 64px); padding-bottom: 0; container-type: inline-size; }
 .about-open h1 { margin-top: clamp(40px, 6vw, 88px); }
 .about-open h1 .light { padding-left: clamp(0px, 12vw, 220px); }
+@media (max-width: 479px) { .about-open h1 .light { padding-left: 0; } }
 .about-cols { display: flex; flex-wrap: wrap; gap: 48px clamp(40px, 7vw, 120px); margin-top: clamp(56px, 7vw, 100px); align-items: flex-start; }
 .about-fig { flex: 0 1 400px; margin: 0; position: sticky; top: 100px; align-self: flex-start; will-change: transform; }
+/* abaixo de 1000px as colunas quebram e a foto fica acima do texto: presa no topo, ela cobriria o texto ao rolar */
+@media (max-width: 999px) { .about-fig { position: static; } }
 .about-fig__box { aspect-ratio: 3/4; position: relative; overflow: hidden; background: var(--tile); }
 .about-fig figcaption { margin-top: 12px; font: 400 13px/1.5 var(--f-body); color: var(--m1); letter-spacing: .02em; text-wrap: pretty; }
 .about-txt { flex: 1 1 440px; max-width: 640px; display: flex; flex-direction: column; gap: 24px; }
@@ -77,9 +83,10 @@
 .skill li { font: 400 16px/1.5 var(--f-body); margin-bottom: 6px; }
 
 /* ---------- Projetos (galeria) ---------- */
-.pj-open { padding-top: clamp(28px, 5vw, 64px); padding-bottom: clamp(48px, 6vw, 80px); }
+.pj-open { padding-top: clamp(28px, 5vw, 64px); padding-bottom: clamp(48px, 6vw, 80px); container-type: inline-size; }
 .pj-open__row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 40px; margin-top: clamp(40px, 6vw, 88px); }
 .pj-open h1 { font: 500 clamp(64px, 12vw, 200px)/.9 var(--f-display); text-transform: uppercase; }
+.pj-open h1 { font-size: min(clamp(64px, 12vw, 200px), 12.5cqi); }   /* "SELECIONADOS." mede 7,72 em */
 .pj-open__row p { max-width: 380px; font: 400 17px/1.6 var(--f-body); color: var(--m2); text-wrap: pretty; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: clamp(40px, 5vw, 64px); }
 .filters button { min-height: 44px; padding: 0 20px; font: 500 14px var(--f-body); letter-spacing: .03em; cursor: pointer; border: 1px solid var(--ink); background: transparent; color: var(--ink); transition: background .2s, color .2s; }
@@ -126,7 +133,7 @@
 .pj-card .tape__track span { font-size: 18px; }
 
 /* ---------- Estudo de caso ---------- */
-.case-head { padding-top: clamp(28px, 5vw, 64px); }
+.case-head { padding-top: clamp(28px, 5vw, 64px); container-type: inline-size; }
 .case-head__bar { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: center; padding-bottom: 18px; border-bottom: 1px solid rgba(var(--ink-rgb), .2); }
 .back { font: 500 12px/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding: 8px 0; background: linear-gradient(var(--ink), var(--ink)) no-repeat 0 100% / 0 1px; transition: background-size .25s; }
 .back:hover { background-size: 100% 1px; }
