@@ -88,9 +88,10 @@ main:focus, main h1:focus { outline: none; }
 
 /* ---------- Footer / Contato ---------- */
 .foot { background: var(--ink); color: var(--paper); position: relative; overflow: hidden; }
-.foot__in { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 12vw, 160px) var(--gutter) 40px; }
+.foot__in { max-width: var(--max); margin: 0 auto; padding: clamp(80px, 12vw, 160px) var(--gutter) 40px; container-type: inline-size; }
 .foot .eyebrow { color: var(--m1i); letter-spacing: .14em; margin-bottom: 32px; display: block; }
 .foot h2 { font: 500 clamp(52px, 9vw, 148px)/.95 var(--f-display); text-transform: uppercase; }
+.foot h2 { font-size: min(clamp(52px, 9vw, 148px), 15.5cqi); }   /* "CONVERSAR." mede 6,15 em: cabe até em 320px */
 .foot__cols { display: flex; flex-wrap: wrap; gap: 48px 80px; margin-top: 56px; align-items: flex-start; }
 .foot__txt { flex: 1 1 320px; max-width: 460px; font: 400 19px/1.6 var(--f-body); color: var(--m2i); text-wrap: pretty; }
 .foot__list { flex: 1 1 420px; border-top: 1px solid rgba(var(--paper-rgb), .24); }
