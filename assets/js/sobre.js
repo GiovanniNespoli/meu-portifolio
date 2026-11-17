@@ -17,7 +17,7 @@
         <ul class="rows tl__wins">${e.entregas.map(x => `<li>
           <div class="row-top"><span class="row-t">${esc(x.titulo)}</span>${x.resultado ? `<span class="badge">${esc(x.resultado)}</span>` : ''}</div>
           <span class="row-n">${esc(x.texto || '')}</span>
-          ${x.caso ? `<a class="tl__case" href="projeto.html?caso=${encodeURIComponent(x.caso)}">Ver estudo de caso <span aria-hidden="true">↗</span></a>` : ''}
+          ${x.caso ? `<a class="tl__case" href="projeto.html?caso=${encodeURIComponent(x.caso)}">Ver estudo de caso <span aria-hidden="true">↗\uFE0E</span></a>` : ''}
         </li>`).join('')}</ul>` : ''}
         ${(e.stack || []).length ? `<p class="lbl tl__lbl">Tecnologias</p><p class="tl__stack">${e.stack.map(esc).join('  ·  ')}</p>` : ''}
       </li>`).join(''));

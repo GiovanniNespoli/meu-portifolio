@@ -222,7 +222,7 @@
     const items = defs.map(([k, label, href, show]) => {
       const v = (contato[k] || '').trim();
       const body = v
-        ? `<a href="${esc(href(v))}" ${k === 'email' ? '' : 'target="_blank" class="is-caps"'} rel="noopener">${esc(show(v))} ↗</a>`
+        ? `<a href="${esc(href(v))}" ${k === 'email' ? '' : 'target="_blank" class="is-caps"'} rel="noopener">${esc(show(v))} ↗\uFE0E</a>`
         : `<span class="tbd">a definir · contato.${k}</span>`;
       return `<li data-reveal="up"><span class="foot__ico" role="img" aria-label="${label}">${ICONS[k]}</span>${body}</li>`;
     }).join('');
