@@ -56,9 +56,8 @@
                   <div class="media-grid__box">${img(caminho(m.arquivo), { alt: m.legenda || '', label: m.legenda || 'Imagem do projeto' })}</div>
                   ${m.legenda ? `<figcaption>${esc(m.legenda)}</figcaption>` : ''}
                 </figure>`).join('')}</div>`}
-          <div class="case-links">${links.length
-            ? links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || l.url)} ↗</a>`).join('')
-            : conf ? '' : '<span class="ph-chip">Links a adicionar em projetos[].links (label, url)</span>'}</div>
+          ${links.length ? `<div class="case-links">${
+            links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || l.url)} ↗\uFE0E</a>`).join('')}</div>` : ''}
         </section>`;
 
     document.getElementById('caso').innerHTML = `
