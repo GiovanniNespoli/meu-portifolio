@@ -24,3 +24,8 @@ Campos opcionais de `projetos[]`:
 - `sem_midia`: `true` omite a seção "Imagens e links" do estudo de caso
 
 Não coloque prints de projetos confidenciais em `assets/`: o site é estático e qualquer arquivo publicado pode ser baixado.
+
+## Deploy
+Publicado no Railway (projeto `meu-portifolio`, serviço `meu-portifolio`, ambiente `production`): https://meu-portifolio-production-fe24f32f.up.railway.app
+
+O serviço acompanha a branch `main` deste repositório: cada merge/push na `main` gera um deploy novo. O Railway detecta o `index.html` na raiz e serve o site como estático (Caddy), sem build. Ao mudar CSS/JS, atualize o `?v=` nos HTML para furar o cache.
